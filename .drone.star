@@ -139,8 +139,7 @@ def testing(ctx):
           'REVA_STORAGE_HOME_DATA_TEMP_FOLDER': '/srv/app/tmp/',
           'REVA_STORAGE_LOCAL_ROOT': '/srv/app/tmp/reva/root',
           'REVA_STORAGE_OWNCLOUD_DATADIR': '/srv/app/tmp/reva/data',
-          'REVA_STORAGE_OC_DATA_TEMP_FOLDER': '/srv/app/tmp/',
-          'WEBDAV_NAMESPACE_JAIL': '/'
+          'REVA_STORAGE_OC_DATA_TEMP_FOLDER': '/srv/app/tmp/'
         },
         'commands': [
           'mkdir -p /srv/app/tmp/reva',
@@ -176,7 +175,7 @@ def testing(ctx):
           'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/'
          },
          'commands': [
-           'git clone -b master --depth=1 https://github.com/owncloud/core.git /srv/app/testrunner',
+           'git clone -b fix-ocis-tests --depth=1 https://github.com/owncloud/core.git /srv/app/testrunner',
            'cd /srv/app/testrunner',
            'make test-acceptance-api'
           ],
