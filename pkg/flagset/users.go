@@ -195,9 +195,9 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 			EnvVars:     []string{"REVA_USERS_URL"},
 			Destination: &cfg.Reva.Users.URL,
 		},
-		&cli.StringSliceFlag{
+		&cli.StringFlag{
 			Name:    "service",
-			Value:   cli.NewStringSlice("userprovider"), // TODO preferences
+			Value:   "userprovider", // TODO preferences
 			Usage:   "--service userprovider [--service otherservice]",
 			EnvVars: []string{"REVA_USERS_SERVICES"},
 		},
