@@ -175,7 +175,7 @@ def testing(ctx):
           'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/'
          },
          'commands': [
-           'git clone -b master --depth=1 https://github.com/owncloud/core.git /srv/app/testrunner',
+           'git clone -b revaIssue64Tests --depth=1 https://github.com/owncloud/core.git /srv/app/testrunner',
            'cd /srv/app/testrunner',
            'make test-acceptance-api'
           ],
