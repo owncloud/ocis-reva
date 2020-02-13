@@ -116,9 +116,9 @@ func StorageRootWithConfig(cfg *config.Config) []cli.Flag {
 			EnvVars:     []string{"REVA_STORAGE_ROOT_URL"},
 			Destination: &cfg.Reva.StorageRoot.URL,
 		},
-		&cli.StringFlag{
+		&cli.StringSliceFlag{
 			Name:    "service",
-			Value:   "storageprovider",
+			Value:   cli.NewStringSlice("storageprovider"),
 			Usage:   "--service storageprovider [--service otherservice]",
 			EnvVars: []string{"REVA_STORAGE_ROOT_SERVICES"},
 		},
@@ -282,6 +282,27 @@ func StorageRootWithConfig(cfg *config.Config) []cli.Flag {
 			Usage:       "the path to the owncloud data directory",
 			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_DATADIR"},
 			Destination: &cfg.Reva.Storages.OwnCloud.Datadirectory,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-scan",
+			Value:       true,
+			Usage:       "scan files on startup to add fileids",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_SCAN"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Scan,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-autocreate",
+			Value:       true,
+			Usage:       "autocreate home path for new users",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_AUTOCREATE"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Autocreate,
+		},
+		&cli.StringFlag{
+			Name:        "storage-owncloud-redis",
+			Value:       ":6379",
+			Usage:       "the address of the redis server",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_REDIS_ADDR"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Redis,
 		},
 	}
 }

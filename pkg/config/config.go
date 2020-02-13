@@ -72,17 +72,17 @@ type StoragePort struct {
 	TempFolder string
 }
 
-// StorageConfig combines all available storage configuration parts.
+// StorageConfig combines all available storage driver configuration parts.
 type StorageConfig struct {
-	EOS      StorageEOS
-	Local    StorageLocal
-	OwnCloud StorageOwnCloud
-	S3       StorageS3
+	EOS      DriverEOS
+	Local    DriverLocal
+	OwnCloud DriverOwnCloud
+	S3       DriverS3
 	// TODO checksums ... figure out what that is supposed to do
 }
 
-// StorageEOS defines the available EOS storage configuration.
-type StorageEOS struct {
+// DriverEOS defines the available EOS driver configuration.
+type DriverEOS struct {
 	// Namespace for metadata operations
 	Namespace string
 
@@ -130,18 +130,21 @@ type StorageEOS struct {
 	SingleUsername string
 }
 
-// StorageLocal defines the available local storage configuration.
-type StorageLocal struct {
+// DriverLocal defines the available local storage driver configuration.
+type DriverLocal struct {
 	Root string
 }
 
-// StorageOwnCloud defines the available ownCloud storage configuration.
-type StorageOwnCloud struct {
+// DriverOwnCloud defines the available ownCloud storage driver configuration.
+type DriverOwnCloud struct {
 	Datadirectory string
+	Scan          bool
+	Autocreate    bool
+	Redis         string
 }
 
-// StorageS3 defines the available S3 storage configuration.
-type StorageS3 struct {
+// DriverS3 defines the available S3 storage driver configuration.
+type DriverS3 struct {
 	Region    string
 	AccessKey string
 	SecretKey string
@@ -178,6 +181,12 @@ type LDAPSchema struct {
 	CN          string
 }
 
+// OCDav defines the available ocdav configuration.
+type OCDav struct {
+	WebdavNamespace   string
+	DavFilesNamespace string
+}
+
 // Reva defines the available reva configuration.
 type Reva struct {
 	// JWTSecret used to sign jwt tokens between services
@@ -186,6 +195,7 @@ type Reva struct {
 	TransferExpires int
 	OIDC            OIDC
 	LDAP            LDAP
+	OCDav           OCDav
 	Storages        StorageConfig
 	// Ports are used configure which services to start on which port
 	Frontend          Port

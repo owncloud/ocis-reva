@@ -160,6 +160,7 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.BoolFlag{
 			Name:        "expose-data-server",
+			Value:       true,
 			Usage:       "exposes a dedicated data server",
 			EnvVars:     []string{"REVA_STORAGE_OC_EXPOSE_DATA_SERVER"},
 			Destination: &cfg.Reva.StorageOC.ExposeDataServer,
@@ -282,6 +283,27 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 			Usage:       "the path to the owncloud data directory",
 			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_DATADIR"},
 			Destination: &cfg.Reva.Storages.OwnCloud.Datadirectory,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-scan",
+			Value:       true,
+			Usage:       "scan files on startup to add fileids",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_SCAN"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Scan,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-autocreate",
+			Value:       true,
+			Usage:       "autocreate home path for new users",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_AUTOCREATE"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Autocreate,
+		},
+		&cli.StringFlag{
+			Name:        "storage-owncloud-redis",
+			Value:       ":6379",
+			Usage:       "the address of the redis server",
+			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_REDIS_ADDR"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Redis,
 		},
 	}
 }
