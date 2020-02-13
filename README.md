@@ -87,7 +87,7 @@ For details on the `json` and `ldap` backends see the [documentation](https://ow
     bin/ocis-reva gateway & \
     REVA_USERS_DRIVER=ldap bin/ocis-reva users & \
     REVA_USERS_DRIVER=ldap bin/ocis-reva auth-basic & \
-    bin/ocis-reva auth-bearer & \
+    REVA_USERS_DRIVER=ldap bin/ocis-reva auth-bearer & \
     bin/ocis-reva sharing & \
     bin/ocis-reva storage-root & \
     bin/ocis-reva storage-home & \
