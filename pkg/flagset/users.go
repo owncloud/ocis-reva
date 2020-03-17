@@ -93,14 +93,14 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.IntFlag{
 			Name:        "ldap-port",
-			Value:       636,
+			Value:       9125,
 			Usage:       "LDAP port",
 			EnvVars:     []string{"REVA_LDAP_PORT"},
 			Destination: &cfg.Reva.LDAP.Port,
 		},
 		&cli.StringFlag{
 			Name:        "ldap-base-dn",
-			Value:       "dc=owncloud,dc=com",
+			Value:       "dc=example,dc=org",
 			Usage:       "LDAP basedn",
 			EnvVars:     []string{"REVA_LDAP_BASE_DN"},
 			Destination: &cfg.Reva.LDAP.BaseDN,
@@ -121,14 +121,14 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "ldap-bind-dn",
-			Value:       "cn=admin,dc=owncloud,dc=com",
+			Value:       "cn=reva,ou=sysusers,dc=example,dc=org",
 			Usage:       "LDAP bind dn",
 			EnvVars:     []string{"REVA_LDAP_BIND_DN"},
 			Destination: &cfg.Reva.LDAP.BindDN,
 		},
 		&cli.StringFlag{
 			Name:        "ldap-bind-password",
-			Value:       "admin",
+			Value:       "reva",
 			Usage:       "LDAP bind password",
 			EnvVars:     []string{"REVA_LDAP_BIND_PASSWORD"},
 			Destination: &cfg.Reva.LDAP.BindPassword,
@@ -204,7 +204,7 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 
 		&cli.StringFlag{
 			Name:        "driver",
-			Value:       "demo",
+			Value:       "ldap",
 			Usage:       "user driver: 'demo', 'json' or 'ldap'",
 			EnvVars:     []string{"REVA_USERS_DRIVER"},
 			Destination: &cfg.Reva.Users.Driver,
