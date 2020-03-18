@@ -86,7 +86,7 @@ func AuthBearerWithConfig(cfg *config.Config) []cli.Flag {
 
 		&cli.StringFlag{
 			Name:        "oidc-issuer",
-			Value:       "https://localhost:9130",
+			Value:       "https://localhost:9200",
 			Usage:       "OIDC issuer",
 			EnvVars:     []string{"REVA_OIDC_ISSUER"},
 			Destination: &cfg.Reva.OIDC.Issuer,
