@@ -93,7 +93,7 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.IntFlag{
 			Name:        "ldap-port",
-			Value:       9125,
+			Value:       9126,
 			Usage:       "LDAP port",
 			EnvVars:     []string{"REVA_LDAP_PORT"},
 			Destination: &cfg.Reva.LDAP.Port,
@@ -150,7 +150,7 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "ldap-schema-displayName",
-			Value:       "displayName",
+			Value:       "sn",
 			Usage:       "LDAP schema displayName",
 			EnvVars:     []string{"REVA_LDAP_SCHEMA_DISPLAYNAME"},
 			Destination: &cfg.Reva.LDAP.Schema.DisplayName,

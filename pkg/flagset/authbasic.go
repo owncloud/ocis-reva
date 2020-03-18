@@ -110,7 +110,7 @@ func AuthBasicWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.IntFlag{
 			Name:        "ldap-port",
-			Value:       9125,
+			Value:       9126,
 			Usage:       "LDAP port",
 			EnvVars:     []string{"REVA_LDAP_PORT"},
 			Destination: &cfg.Reva.LDAP.Port,
