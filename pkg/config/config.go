@@ -27,6 +27,13 @@ type Gateway struct {
 	HomeProvider string
 }
 
+// Sharing defines the available sharing configuration.
+type Sharing struct {
+	Port
+	UserDriver   string
+	PublicDriver string
+}
+
 // Port defines the available port configuration.
 type Port struct {
 	// MaxCPUs can be a number or a percentage
@@ -209,7 +216,7 @@ type Reva struct {
 	Users             Users
 	AuthBasic         Port
 	AuthBearer        Port
-	Sharing           Port
+	Sharing           Sharing
 	StorageRoot       StoragePort
 	StorageHome       StoragePort
 	StorageHomeData   StoragePort
