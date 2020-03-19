@@ -93,7 +93,7 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.IntFlag{
 			Name:        "ldap-port",
-			Value:       9125,
+			Value:       9126,
 			Usage:       "LDAP port",
 			EnvVars:     []string{"REVA_LDAP_PORT"},
 			Destination: &cfg.Reva.LDAP.Port,
@@ -107,14 +107,14 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "ldap-userfilter",
-			Value:       "(&(objectclass=posixAccount)(cn=%s))",
+			Value:       "(&(objectclass=posixAccount)(cn=%s*))",
 			Usage:       "LDAP userfilter",
 			EnvVars:     []string{"REVA_LDAP_USERFILTER"},
 			Destination: &cfg.Reva.LDAP.UserFilter,
 		},
 		&cli.StringFlag{
 			Name:        "ldap-groupfilter",
-			Value:       "(&(objectclass=posixGroup)(cn=%s))",
+			Value:       "(&(objectclass=posixGroup)(cn=%s*))",
 			Usage:       "LDAP groupfilter",
 			EnvVars:     []string{"REVA_LDAP_GROUPFILTER"},
 			Destination: &cfg.Reva.LDAP.GroupFilter,
@@ -150,7 +150,7 @@ func UsersWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "ldap-schema-displayName",
-			Value:       "displayName",
+			Value:       "sn",
 			Usage:       "LDAP schema displayName",
 			EnvVars:     []string{"REVA_LDAP_SCHEMA_DISPLAYNAME"},
 			Destination: &cfg.Reva.LDAP.Schema.DisplayName,
