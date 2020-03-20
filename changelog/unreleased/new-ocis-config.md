@@ -6,5 +6,6 @@ We changed the default configuration to integrate better with ocis.
 - We use a dedicated technical `reva` user to make ldap binds
 - Clients are supposed to use the ocis-proxy endpoint `https://localhost:9200`
 - We removed unneeded ocis configuration from the frontend which no longer serves an oidc provider.
+- We changed the default user OpaqueID attribute from `sub` to `preferred_username`. Tha latter is a claim populated by konnectd that can also be used by the reva ldap user manager to look up users by their OpaqueId
 
 https://github.com/owncloud/ocis-reva/pull/113
