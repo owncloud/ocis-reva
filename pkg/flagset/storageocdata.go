@@ -156,6 +156,20 @@ func StorageOCDataWithConfig(cfg *config.Config) []cli.Flag {
 			Destination: &cfg.Reva.Storages.EOS.Namespace,
 		},
 		&cli.StringFlag{
+			Name: "storage-eos-shadow-namespace",
+			// Defaults to path.Join(c.Namespace, ".shadow")
+			Usage:       "Shadow namespace where share references are stored",
+			EnvVars:     []string{"REVA_STORAGE_EOS_SHADOW_NAMESPACE"},
+			Destination: &cfg.Reva.Storages.EOS.ShadowNamespace,
+		},
+		&cli.StringFlag{
+			Name:        "storage-eos-share-folder",
+			Value:       "",
+			Usage:       "name of the share folder",
+			EnvVars:     []string{"REVA_STORAGE_EOS_SHARE_FOLDER"},
+			Destination: &cfg.Reva.Storages.EOS.ShareFolder,
+		},
+		&cli.StringFlag{
 			Name:        "storage-eos-binary",
 			Value:       "/usr/bin/eos",
 			Usage:       "Location of the eos binary",

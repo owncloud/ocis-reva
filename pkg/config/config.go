@@ -92,6 +92,13 @@ type DriverEOS struct {
 	// Namespace for metadata operations
 	Namespace string
 
+	// ShadowNamespace for storing shadow data
+	ShadowNamespace string
+
+	// ShareFolder defines the name of the folder in the
+	// shadowed namespace. Ex: /eos/user/.shadow/h/hugo/MyShares
+	ShareFolder string
+
 	// Location of the eos binary.
 	// Default is /usr/bin/eos.
 	EosBinary string

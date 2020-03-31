@@ -7,8 +7,8 @@ import (
 	"github.com/owncloud/ocis-reva/pkg/config"
 )
 
-// StorageOCWithConfig applies cfg to the root flagset
-func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
+// StorageEOSWithConfig applies cfg to the root flagset
+func StorageEOSWithConfig(cfg *config.Config) []cli.Flag {
 	return []cli.Flag{
 
 		&cli.BoolFlag{
@@ -49,10 +49,10 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 		// debug ports are the odd ports
 		&cli.StringFlag{
 			Name:        "debug-addr",
-			Value:       "0.0.0.0:9163",
+			Value:       "0.0.0.0:9159",
 			Usage:       "Address to bind debug server",
-			EnvVars:     []string{"REVA_STORAGE_OC_DEBUG_ADDR"},
-			Destination: &cfg.Reva.StorageOC.DebugAddr,
+			EnvVars:     []string{"REVA_STORAGE_EOS_DEBUG_ADDR"},
+			Destination: &cfg.Reva.StorageEOS.DebugAddr,
 		},
 		&cli.StringFlag{
 			Name:        "debug-token",
@@ -92,78 +92,78 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 			Name:        "network",
 			Value:       "tcp",
 			Usage:       "Network to use for the reva service, can be 'tcp', 'udp' or 'unix'",
-			EnvVars:     []string{"REVA_STORAGE_OC_NETWORK"},
-			Destination: &cfg.Reva.StorageOC.Network,
+			EnvVars:     []string{"REVA_STORAGE_EOS_NETWORK"},
+			Destination: &cfg.Reva.StorageEOS.Network,
 		},
 		&cli.StringFlag{
 			Name:        "protocol",
 			Value:       "grpc",
 			Usage:       "protocol for reva service, can be 'http' or 'grpc'",
-			EnvVars:     []string{"REVA_STORAGE_OC_PROTOCOL"},
-			Destination: &cfg.Reva.StorageOC.Protocol,
+			EnvVars:     []string{"REVA_STORAGE_EOS_PROTOCOL"},
+			Destination: &cfg.Reva.StorageEOS.Protocol,
 		},
 		&cli.StringFlag{
 			Name:        "addr",
-			Value:       "0.0.0.0:9162",
+			Value:       "0.0.0.0:9158",
 			Usage:       "Address to bind reva service",
-			EnvVars:     []string{"REVA_STORAGE_OC_ADDR"},
-			Destination: &cfg.Reva.StorageOC.Addr,
+			EnvVars:     []string{"REVA_STORAGE_EOS_ADDR"},
+			Destination: &cfg.Reva.StorageEOS.Addr,
 		},
 		&cli.StringFlag{
 			Name:        "url",
-			Value:       "localhost:9162",
+			Value:       "localhost:9158",
 			Usage:       "URL to use for the reva service",
-			EnvVars:     []string{"REVA_STORAGE_OC_URL"},
-			Destination: &cfg.Reva.StorageOC.URL,
+			EnvVars:     []string{"REVA_STORAGE_EOS_URL"},
+			Destination: &cfg.Reva.StorageEOS.URL,
 		},
 		&cli.StringSliceFlag{
 			Name:    "service",
 			Value:   cli.NewStringSlice("storageprovider"),
 			Usage:   "--service storageprovider [--service otherservice]",
-			EnvVars: []string{"REVA_STORAGE_OC_SERVICES"},
+			EnvVars: []string{"REVA_STORAGE_EOS_SERVICES"},
 		},
 
 		&cli.StringFlag{
 			Name:        "driver",
-			Value:       "owncloud",
+			Value:       "eos",
 			Usage:       "storage driver, eg. local, eos, owncloud or s3",
-			EnvVars:     []string{"REVA_STORAGE_OC_DRIVER"},
-			Destination: &cfg.Reva.StorageOC.Driver,
+			EnvVars:     []string{"REVA_STORAGE_EOS_DRIVER"},
+			Destination: &cfg.Reva.StorageEOS.Driver,
 		},
 		&cli.StringFlag{
 			Name:        "mount-path",
-			Value:       "/oc",
+			Value:       "/eos",
 			Usage:       "mount path",
-			EnvVars:     []string{"REVA_STORAGE_OC_MOUNT_PATH"},
-			Destination: &cfg.Reva.StorageOC.MountPath,
+			EnvVars:     []string{"REVA_STORAGE_EOS_MOUNT_PATH"},
+			Destination: &cfg.Reva.StorageEOS.MountPath,
 		},
 		&cli.StringFlag{
 			Name:        "mount-id",
-			Value:       "1284d238-aa92-42ce-bdc4-0b0000009162",
+			Value:       "1284d238-aa92-42ce-bdc4-0b0000009158",
 			Usage:       "mount id",
-			EnvVars:     []string{"REVA_STORAGE_OC_MOUNT_ID"},
-			Destination: &cfg.Reva.StorageOC.MountID,
+			EnvVars:     []string{"REVA_STORAGE_EOS_MOUNT_ID"},
+			Destination: &cfg.Reva.StorageEOS.MountID,
 		},
 		&cli.BoolFlag{
 			Name:        "expose-data-server",
 			Value:       true,
 			Usage:       "exposes a dedicated data server",
-			EnvVars:     []string{"REVA_STORAGE_OC_EXPOSE_DATA_SERVER"},
-			Destination: &cfg.Reva.StorageOC.ExposeDataServer,
+			EnvVars:     []string{"REVA_STORAGE_EOS_EXPOSE_DATA_SERVER"},
+			Destination: &cfg.Reva.StorageEOS.ExposeDataServer,
 		},
 		&cli.StringFlag{
 			Name:        "data-server-url",
-			Value:       "http://localhost:9164/data",
+			Value:       "http://localhost:9160/data",
 			Usage:       "data server url",
-			EnvVars:     []string{"REVA_STORAGE_OC_DATA_SERVER_URL"},
-			Destination: &cfg.Reva.StorageOC.DataServerURL,
+			EnvVars:     []string{"REVA_STORAGE_EOS_DATA_SERVER_URL"},
+			Destination: &cfg.Reva.StorageEOS.DataServerURL,
 		},
 		&cli.BoolFlag{
 			Name:        "enable-home-creation",
 			Value:       false,
 			Usage:       "if enabled home dirs will be automatically created",
-			EnvVars:     []string{"REVA_STORAGE_OC_ENABLE_HOME_CREATION"},
-			Destination: &cfg.Reva.StorageOC.EnableHomeCreation,
+			EnvVars:     []string{"REVA_STORAGE_EOS_ENABLE_HOME_CREATION"},
+			Destination: &cfg.Reva.StorageEOS.EnableHomeCreation,
 		},
 
 		// Storage drivers
@@ -172,7 +172,7 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 
 		&cli.StringFlag{
 			Name:        "storage-eos-namespace",
-			Value:       "",
+			Value:       "/eos/dockertest/reva",
 			Usage:       "Namespace for metadata operations",
 			EnvVars:     []string{"REVA_STORAGE_EOS_NAMESPACE"},
 			Destination: &cfg.Reva.Storages.EOS.Namespace,
@@ -186,7 +186,7 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-share-folder",
-			Value:       "",
+			Value:       "/Shares",
 			Usage:       "name of the share folder",
 			EnvVars:     []string{"REVA_STORAGE_EOS_SHARE_FOLDER"},
 			Destination: &cfg.Reva.Storages.EOS.ShareFolder,
@@ -207,14 +207,14 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-master-url",
-			Value:       "root://eos-example.org",
+			Value:       "root://eos-mgm1.eoscluster.cern.ch:1094",
 			Usage:       "URL of the Master EOS MGM",
 			EnvVars:     []string{"REVA_STORAGE_EOS_MASTER_URL"},
 			Destination: &cfg.Reva.Storages.EOS.MasterURL,
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-slave-url",
-			Value:       "root://eos-example.org",
+			Value:       "root://eos-mgm1.eoscluster.cern.ch:1094",
 			Usage:       "URL of the Slave EOS MGM",
 			EnvVars:     []string{"REVA_STORAGE_EOS_SLAVE_URL"},
 			Destination: &cfg.Reva.Storages.EOS.SlaveURL,
@@ -258,28 +258,24 @@ func StorageOCWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-sec-protocol",
-			Value:       "",
 			Usage:       "the xrootd security protocol to use between the server and EOS",
 			EnvVars:     []string{"REVA_STORAGE_EOS_SEC_PROTOCOL"},
 			Destination: &cfg.Reva.Storages.EOS.SecProtocol,
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-keytab",
-			Value:       "",
 			Usage:       "the location of the keytab to use to authenticate to EOS",
 			EnvVars:     []string{"REVA_STORAGE_EOS_KEYTAB"},
 			Destination: &cfg.Reva.Storages.EOS.Keytab,
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-single-username",
-			Value:       "",
 			Usage:       "the username to use when SingleUserMode is enabled",
 			EnvVars:     []string{"REVA_STORAGE_EOS_SINGLE_USERNAME"},
 			Destination: &cfg.Reva.Storages.EOS.SingleUsername,
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-layout",
-			Value:       "{{.Username}}",
 			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{.UsernamePrefixCount.2}}/{{.UsernameLower}}" will turn "Einstein" into "Ei/Einstein" `,
 			EnvVars:     []string{"REVA_STORAGE_EOS_LAYOUT"},
 			Destination: &cfg.Reva.Storages.EOS.Layout,
