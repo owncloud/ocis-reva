@@ -31,6 +31,7 @@ type Gateway struct {
 type Sharing struct {
 	Port
 	UserDriver   string
+	UserJSONFile string
 	PublicDriver string
 }
 
