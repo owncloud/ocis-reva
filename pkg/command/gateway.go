@@ -74,11 +74,8 @@ func Gateway(cfg *config.Config) *cli.Command {
 
 				rcfg := map[string]interface{}{
 					"core": map[string]interface{}{
-						"max_cpus":             cfg.Reva.Users.MaxCPUs,
-						"tracing_enabled":      cfg.Tracing.Enabled,
-						"tracing_endpoint":     cfg.Tracing.Endpoint,
-						"tracing_collector":    cfg.Tracing.Collector,
-						"tracing_service_name": "gateway",
+						"max_cpus":        cfg.Reva.Gateway.MaxCPUs,
+						"tracing_enabled": true,
 					},
 					"shared": map[string]interface{}{
 						"jwt_secret": cfg.Reva.JWTSecret,
@@ -117,7 +114,7 @@ func Gateway(cfg *config.Config) *cli.Command {
 										"rules": map[string]interface{}{
 											"basic":        cfg.Reva.AuthBasic.URL,
 											"bearer":       cfg.Reva.AuthBearer.URL,
-											"publicshares": cfg.Reva.StoragePublicLink.URL,
+											"publicshares": "localhost:10054",
 										},
 									},
 								},
@@ -131,10 +128,12 @@ func Gateway(cfg *config.Config) *cli.Command {
 											cfg.Reva.StorageRoot.MountPath: cfg.Reva.StorageRoot.URL,
 											cfg.Reva.StorageRoot.MountID:   cfg.Reva.StorageRoot.URL,
 											cfg.Reva.StorageHome.MountPath: cfg.Reva.StorageHome.URL,
-											// the home storage has no mount id. In responses it returns the mount id of the actual storage
+											// home has no lookup by mount id because it resolves to another storage
 											cfg.Reva.StorageEOS.MountPath:          cfg.Reva.StorageEOS.URL,
 											cfg.Reva.StorageEOS.MountID:            cfg.Reva.StorageEOS.URL,
 											cfg.Reva.StorageOC.MountPath:           cfg.Reva.StorageOC.URL,
+											"/public/":                             "localhost:10054",
+											"e1a73ede-549b-4226-abdf-40e69ca8230d": "localhost:10054",
 											cfg.Reva.StorageOC.MountID:             cfg.Reva.StorageOC.URL,
 											cfg.Reva.StorageS3.MountPath:           cfg.Reva.StorageS3.URL,
 											cfg.Reva.StorageS3.MountID:             cfg.Reva.StorageS3.URL,
@@ -142,8 +141,6 @@ func Gateway(cfg *config.Config) *cli.Command {
 											cfg.Reva.StorageWND.MountID:            cfg.Reva.StorageWND.URL,
 											cfg.Reva.StorageCustom.MountPath:       cfg.Reva.StorageCustom.URL,
 											cfg.Reva.StorageCustom.MountID:         cfg.Reva.StorageCustom.URL,
-											"/public/":                             "localhost:10054",
-											"e1a73ede-549b-4226-abdf-40e69ca8230d": "localhost:10054",
 										},
 									},
 								},
