@@ -78,6 +78,15 @@ type StoragePort struct {
 	TempFolder string
 }
 
+// PublicStorage configures a public storage provider
+type PublicStorage struct {
+	StoragePort
+
+	PublicShareProviderAddr string
+	StorageProviderAddr     string
+	UserProviderAddr        string
+}
+
 // StorageConfig combines all available storage driver configuration parts.
 type StorageConfig struct {
 	EOS      DriverEOS
@@ -230,6 +239,7 @@ type Reva struct {
 	StorageWNDData    StoragePort
 	StorageCustom     StoragePort
 	StorageCustomData StoragePort
+	StoragePublicLink PublicStorage
 	// Configs can be used to configure the reva instance.
 	// Services and Ports will be ignored if this is used
 	Configs map[string]interface{}

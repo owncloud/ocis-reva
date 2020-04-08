@@ -16,17 +16,13 @@ import (
 	"github.com/owncloud/ocis-reva/pkg/server/debug"
 )
 
-// AuthBasic is the entrypoint for the auth-basic command.
-func AuthBasic(cfg *config.Config) *cli.Command {
+// StoragePublicLink is the entrypoint for the reva-storage-public-link command.
+func StoragePublicLink(cfg *config.Config) *cli.Command {
 	return &cli.Command{
-		Name:  "auth-basic",
-		Usage: "Start reva authprovider for basic auth",
-		Flags: flagset.AuthBasicWithConfig(cfg),
-		Before: func(c *cli.Context) error {
-			cfg.Reva.AuthBasic.Services = c.StringSlice("service")
-
-			return nil
-		},
+		Name:     "reva-storage-public-link",
+		Usage:    "Start reva storage-public-link service",
+		Flags:    flagset.StoragePublicLink(cfg),
+		Category: "Extensions",
 		Action: func(c *cli.Context) error {
 			logger := NewLogger(cfg)
 
@@ -67,45 +63,35 @@ func AuthBasic(cfg *config.Config) *cli.Command {
 			defer cancel()
 
 			{
-
 				uuid := uuid.Must(uuid.NewV4())
 				pidFile := path.Join(os.TempDir(), "revad-"+c.Command.Name+"-"+uuid.String()+".pid")
 
 				rcfg := map[string]interface{}{
 					"core": map[string]interface{}{
-						"max_cpus":        cfg.Reva.AuthBasic.MaxCPUs,
+						"max_cpus":        cfg.Reva.StoragePublicLink.MaxCPUs,
 						"tracing_enabled": true,
 					},
 					"shared": map[string]interface{}{
 						"jwt_secret": cfg.Reva.JWTSecret,
 					},
 					"grpc": map[string]interface{}{
-						"network": cfg.Reva.AuthBasic.Network,
-						"address": cfg.Reva.AuthBasic.Addr,
-						// TODO build services dynamically
+						"network": cfg.Reva.StoragePublicLink.Network,
+						"address": cfg.Reva.StoragePublicLink.Addr,
+						"interceptors": map[string]interface{}{
+							"log": map[string]interface{}{},
+						},
 						"services": map[string]interface{}{
+							"publicstorageprovider": map[string]interface{}{
+								"mount_path":                 "/public/", // localhost:[ocdavport]/remote.php/dav/public-files/{token}/folderA/folderB/files.txt
+								"mount_id":                   "e1a73ede-549b-4226-abdf-40e69ca8230d",
+								"public_share_provider_addr": cfg.Reva.StoragePublicLink.PublicShareProviderAddr,
+								"storage_provider_addr":      cfg.Reva.StoragePublicLink.StorageProviderAddr,
+							},
 							"authprovider": map[string]interface{}{
-								"auth_manager": cfg.Reva.Users.Driver,
+								"auth_manager": "publicshares",
 								"auth_managers": map[string]interface{}{
-									"json": map[string]interface{}{
-										"users": cfg.Reva.Users.JSON,
-									},
-									"ldap": map[string]interface{}{
-										"hostname":      cfg.Reva.LDAP.Hostname,
-										"port":          cfg.Reva.LDAP.Port,
-										"base_dn":       cfg.Reva.LDAP.BaseDN,
-										"userfilter":    cfg.Reva.LDAP.UserFilter,
-										"groupfilter":   cfg.Reva.LDAP.GroupFilter,
-										"bind_username": cfg.Reva.LDAP.BindDN,
-										"bind_password": cfg.Reva.LDAP.BindPassword,
-										"idp":           cfg.Reva.LDAP.IDP,
-										"schema": map[string]interface{}{
-											"dn":          "dn",
-											"uid":         cfg.Reva.LDAP.Schema.UID,
-											"mail":        cfg.Reva.LDAP.Schema.Mail,
-											"displayName": cfg.Reva.LDAP.Schema.DisplayName,
-											"cn":          cfg.Reva.LDAP.Schema.CN,
-										},
+									"publicshares": map[string]interface{}{
+										"gateway_addr": "localhost:9142",
 									},
 								},
 							},
@@ -128,7 +114,7 @@ func AuthBasic(cfg *config.Config) *cli.Command {
 			{
 				server, err := debug.Server(
 					debug.Name(c.Command.Name+"-debug"),
-					debug.Addr(cfg.Reva.AuthBasic.DebugAddr),
+					debug.Addr(cfg.Reva.StoragePublicLink.DebugAddr),
 					debug.Logger(logger),
 					debug.Context(ctx),
 					debug.Config(cfg),
@@ -137,7 +123,7 @@ func AuthBasic(cfg *config.Config) *cli.Command {
 				if err != nil {
 					logger.Info().
 						Err(err).
-						Str("server", "debug").
+						Str("server", c.Command.Name+"-debug").
 						Msg("Failed to initialize server")
 
 					return err
@@ -154,11 +140,11 @@ func AuthBasic(cfg *config.Config) *cli.Command {
 					if err := server.Shutdown(ctx); err != nil {
 						logger.Info().
 							Err(err).
-							Str("server", "debug").
+							Str("server", c.Command.Name+"-debug").
 							Msg("Failed to shutdown server")
 					} else {
 						logger.Info().
-							Str("server", "debug").
+							Str("server", c.Command.Name+"-debug").
 							Msg("Shutting down server")
 					}
 				})
