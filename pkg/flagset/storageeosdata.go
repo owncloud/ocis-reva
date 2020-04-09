@@ -254,6 +254,7 @@ func StorageEOSDataWithConfig(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "storage-eos-layout",
+			Value:       "{{substr 0 1 .Username}}/{{.Username}}",
 			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{.UsernamePrefixCount.2}}/{{.UsernameLower}}" will turn "Einstein" into "Ei/Einstein" `,
 			EnvVars:     []string{"REVA_STORAGE_EOS_LAYOUT"},
 			Destination: &cfg.Reva.Storages.EOS.Layout,
