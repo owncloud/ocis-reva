@@ -72,7 +72,8 @@ func Users(cfg *config.Config) *cli.Command {
 
 				rcfg := map[string]interface{}{
 					"core": map[string]interface{}{
-						"max_cpus": cfg.Reva.Users.MaxCPUs,
+						"max_cpus":        cfg.Reva.Users.MaxCPUs,
+						"tracing_enabled": cfg.Tracing.Enabled,
 					},
 					"shared": map[string]interface{}{
 						"jwt_secret": cfg.Reva.JWTSecret,
