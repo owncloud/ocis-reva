@@ -127,12 +127,10 @@ func Gateway(cfg *config.Config) *cli.Command {
 											cfg.Reva.StorageRoot.MountPath: cfg.Reva.StorageRoot.URL,
 											cfg.Reva.StorageRoot.MountID:   cfg.Reva.StorageRoot.URL,
 											cfg.Reva.StorageHome.MountPath: cfg.Reva.StorageHome.URL,
-											// home has no lookup by mount id because it resolves to another storage
+											// the home storage has no mount id. In responses it returns the mount id of the actual storage
 											cfg.Reva.StorageEOS.MountPath:          cfg.Reva.StorageEOS.URL,
 											cfg.Reva.StorageEOS.MountID:            cfg.Reva.StorageEOS.URL,
 											cfg.Reva.StorageOC.MountPath:           cfg.Reva.StorageOC.URL,
-											"/public/":                             "localhost:10054",
-											"e1a73ede-549b-4226-abdf-40e69ca8230d": "localhost:10054",
 											cfg.Reva.StorageOC.MountID:             cfg.Reva.StorageOC.URL,
 											cfg.Reva.StorageS3.MountPath:           cfg.Reva.StorageS3.URL,
 											cfg.Reva.StorageS3.MountID:             cfg.Reva.StorageS3.URL,
@@ -140,6 +138,8 @@ func Gateway(cfg *config.Config) *cli.Command {
 											cfg.Reva.StorageWND.MountID:            cfg.Reva.StorageWND.URL,
 											cfg.Reva.StorageCustom.MountPath:       cfg.Reva.StorageCustom.URL,
 											cfg.Reva.StorageCustom.MountID:         cfg.Reva.StorageCustom.URL,
+											"/public/":                             "localhost:10054",
+											"e1a73ede-549b-4226-abdf-40e69ca8230d": "localhost:10054",
 										},
 									},
 								},
