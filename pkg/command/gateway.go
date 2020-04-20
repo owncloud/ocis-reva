@@ -14,6 +14,7 @@ import (
 	"github.com/owncloud/ocis-reva/pkg/config"
 	"github.com/owncloud/ocis-reva/pkg/flagset"
 	"github.com/owncloud/ocis-reva/pkg/server/debug"
+	"github.com/owncloud/ocis-reva/pkg/service/external"
 )
 
 // Gateway is the entrypoint for the gateway command.
@@ -73,8 +74,11 @@ func Gateway(cfg *config.Config) *cli.Command {
 
 				rcfg := map[string]interface{}{
 					"core": map[string]interface{}{
-						"max_cpus":        cfg.Reva.Gateway.MaxCPUs,
-						"tracing_enabled": true,
+						"max_cpus":             cfg.Reva.Users.MaxCPUs,
+						"tracing_enabled":      cfg.Tracing.Enabled,
+						"tracing_endpoint":     cfg.Tracing.Endpoint,
+						"tracing_collector":    cfg.Tracing.Collector,
+						"tracing_service_name": "gateway",
 					},
 					"shared": map[string]interface{}{
 						"jwt_secret": cfg.Reva.JWTSecret,
@@ -149,6 +153,18 @@ func Gateway(cfg *config.Config) *cli.Command {
 				}
 
 				gr.Add(func() error {
+					err := external.RegisterGRPCEndpoint(
+						ctx,
+						"com.owncloud.reva",
+						uuid.String(),
+						cfg.Reva.Gateway.Addr,
+						logger,
+					)
+
+					if err != nil {
+						return err
+					}
+
 					runtime.Run(rcfg, pidFile)
 					return nil
 				}, func(_ error) {
@@ -158,6 +174,7 @@ func Gateway(cfg *config.Config) *cli.Command {
 
 					cancel()
 				})
+
 			}
 
 			{

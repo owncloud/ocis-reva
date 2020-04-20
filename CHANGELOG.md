@@ -2,20 +2,47 @@
 
 The following sections list the changes in ocis-reva unreleased.
 
-[unreleased]: https://github.com/owncloud/ocis-reva/compare/v0.1.1...master
+[unreleased]: https://github.com/owncloud/ocis-reva/compare/v0.2.0...master
 
 ## Summary
 
-* Bugfix - Fix eos config: [#125](https://github.com/owncloud/ocis-reva/pull/125)
+* Enhancement - Allow configuring the gateway for dataproviders: [#136](https://github.com/owncloud/ocis-reva/pull/136)
 
 ## Details
 
-* Bugfix - Fix eos config: [#125](https://github.com/owncloud/ocis-reva/pull/125)
+* Enhancement - Allow configuring the gateway for dataproviders: [#136](https://github.com/owncloud/ocis-reva/pull/136)
 
-   We have added missing config options for the home layout to the config struct that is passed to
-   eos.
+   This allows using basic or bearer auth when directly talking to dataproviders.
 
-   https://github.com/owncloud/ocis-reva/pull/125
+   https://github.com/owncloud/ocis-reva/pull/136
+
+# Changelog for [0.2.0] (2020-04-15)
+
+The following sections list the changes in ocis-reva 0.2.0.
+
+[0.2.0]: https://github.com/owncloud/ocis-reva/compare/v0.1.1...v0.2.0
+
+## Summary
+
+* Bugfix - Fix eos user sharing config: [#127](https://github.com/owncloud/ocis-reva/pull/127)
+* Enhancement - Update reva to v1.1.0-20200414133413: [#127](https://github.com/owncloud/ocis-reva/pull/127)
+
+## Details
+
+* Bugfix - Fix eos user sharing config: [#127](https://github.com/owncloud/ocis-reva/pull/127)
+
+   We have added missing config options for the user sharing manager and added a dedicated eos
+   storage command with pre configured settings for the eos-docker container. It configures a
+   `Shares` folder in a users home when using eos as the storage driver.
+
+   https://github.com/owncloud/ocis-reva/pull/127
+
+
+* Enhancement - Update reva to v1.1.0-20200414133413: [#127](https://github.com/owncloud/ocis-reva/pull/127)
+
+   Adds initial public sharing and ocm implementation.
+
+   https://github.com/owncloud/ocis-reva/pull/127
 
 # Changelog for [0.1.1] (2020-03-31)
 
