@@ -9,16 +9,20 @@ geekdocFilePath: users.md
 
 ### Demo driver
 
-This is the default user driver.It contains three users:
+This is a simple user driver for testing. It contains three users:
 ```
 einstein:relativity
 marie:radioactivty
 richard:superfluidity
 ```
+In order to use the `demo` driver you need to export the relevant environment variable:
+```
+export REVA_USERS_DRIVER=demo
+```
 
 ### JSON driver
 
-In order to switch from the `demo` driver to JSON based users you need to export the relevant environment variables:
+In order to switch from the `ldap` driver to JSON based users you need to export the relevant environment variables:
 ```
 export REVA_USERS_DRIVER=json
 export REVA_USERS_JSON=/path/to/users.json
@@ -28,10 +32,7 @@ For the format of the users.json have a look at the [reva examples](https://gith
 
 ### LDAP driver
 
-In order to switch from the `demo` driver to LDAP you need to export the relevant environment variable:
-```
-export REVA_USERS_DRIVER=ldap
-```
+This is the default user driver.
 
 If the below defaults don't match your environment change them accordingly:
 ```
