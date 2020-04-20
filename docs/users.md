@@ -37,15 +37,15 @@ This is the default user driver.
 If the below defaults don't match your environment change them accordingly:
 ```
 export REVA_LDAP_HOSTNAME=localhost
-export REVA_LDAP_PORT=636
-export REVA_LDAP_BASE_DN='dc=owncloud,dc=com'
+export REVA_LDAP_PORT=9126
+export REVA_LDAP_BASE_DN='dc=example,dc=org'
 export REVA_LDAP_USERFILTER='(&(objectclass=posixAccount)(cn=%s))'
 export REVA_LDAP_GROUPFILTER='(&(objectclass=posixGroup)(cn=%s))'
-export REVA_LDAP_BIND_DN='cn=admin,dc=owncloud,dc=com'
-export REVA_LDAP_BIND_PASSWORD=admin
+export REVA_LDAP_BIND_DN='cn=reva,ou=sysusers,dc=example,dc=org'
+export REVA_LDAP_BIND_PASSWORD=reva
 export REVA_LDAP_SCHEMA_UID=uid
 export REVA_LDAP_SCHEMA_MAIL=mail
-export REVA_LDAP_SCHEMA_DISPLAYNAME=displayName
+export REVA_LDAP_SCHEMA_DISPLAYNAME=sn
 export REVA_LDAP_SCHEMA_CN=cn
 ```
 
