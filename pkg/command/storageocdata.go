@@ -85,6 +85,11 @@ func StorageOCData(cfg *config.Config) *cli.Command {
 					"http": map[string]interface{}{
 						"network": cfg.Reva.StorageOCData.Network,
 						"address": cfg.Reva.StorageOCData.Addr,
+						"middlewares": map[string]interface{}{
+							"cors": map[string]interface{}{
+								"allow_credentials": true,
+							},
+						},
 						// TODO build services dynamically
 						"services": map[string]interface{}{
 							"dataprovider": map[string]interface{}{

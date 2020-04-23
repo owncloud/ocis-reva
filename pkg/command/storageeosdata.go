@@ -85,6 +85,11 @@ func StorageEOSData(cfg *config.Config) *cli.Command {
 					"http": map[string]interface{}{
 						"network": cfg.Reva.StorageEOSData.Network,
 						"address": cfg.Reva.StorageEOSData.Addr,
+						"middlewares": map[string]interface{}{
+							"cors": map[string]interface{}{
+								"allow_credentials": true,
+							},
+						},
 						// TODO build services dynamically
 						"services": map[string]interface{}{
 							"dataprovider": map[string]interface{}{
