@@ -93,9 +93,9 @@ func StorageHomeData(cfg *config.Config) *cli.Command {
 								"drivers": map[string]interface{}{
 									"eos": map[string]interface{}{
 										"namespace":              cfg.Reva.Storages.EOS.Namespace,
-										"eos_binary":             cfg.Reva.Storages.EOS.EosBinary,
 										"shadow_namespace":       cfg.Reva.Storages.EOS.ShadowNamespace,
 										"share_folder":           cfg.Reva.Storages.EOS.ShareFolder,
+										"eos_binary":             cfg.Reva.Storages.EOS.EosBinary,
 										"xrdcopy_binary":         cfg.Reva.Storages.EOS.XrdcopyBinary,
 										"master_url":             cfg.Reva.Storages.EOS.MasterURL,
 										"slave_url":              cfg.Reva.Storages.EOS.SlaveURL,

@@ -94,7 +94,7 @@ func FrontendWithConfig(cfg *config.Config) []cli.Flag {
 		&cli.StringFlag{
 			Name:        "webdav-namespace",
 			Value:       "/home/",
-			Usage:       "Namespace prefix for the /webdav endpoint",
+			Usage:       "Namespace prefix for the `/webdav` endpoint, supports `{{.Username}}` but should not be necessary for the home endpoint",
 			EnvVars:     []string{"WEBDAV_NAMESPACE"},
 			Destination: &cfg.Reva.OCDav.WebdavNamespace,
 		},
@@ -104,7 +104,7 @@ func FrontendWithConfig(cfg *config.Config) []cli.Flag {
 		&cli.StringFlag{
 			Name:        "dav-files-namespace",
 			Value:       "/oc/",
-			Usage:       "Namespace prefix for the webdav /dav/files endpoint",
+			Usage:       "Namespace prefix for the webdav `/dav/files endpoint, supports `{{.Username}}`. For eos `/eos/users/{{substr 0 1 .Username}}/` would map correctly when the eos storage provider is mounted at `/eos`, stores users in `users` and uses the `{{substr 0 1 .Username}}/{{.Username}}` user layout when being accessed as the home storage provider",
 			EnvVars:     []string{"DAV_FILES_NAMESPACE"},
 			Destination: &cfg.Reva.OCDav.DavFilesNamespace,
 		},

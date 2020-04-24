@@ -280,7 +280,7 @@ func StorageHomeWithConfig(cfg *config.Config) []cli.Flag {
 		&cli.StringFlag{
 			Name:        "storage-eos-layout",
 			Value:       "{{substr 0 1 .Username}}/{{.Username}}",
-			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{substr 0 1 .Username}}/{{.Username}}" will turn "Einstein" into "E/Einstein" `,
+			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{substr 0 1 .Username}}/{{.Username}}" will turn "einstein" into "e/einstein"`,
 			EnvVars:     []string{"REVA_STORAGE_EOS_LAYOUT"},
 			Destination: &cfg.Reva.Storages.EOS.Layout,
 		},
@@ -328,7 +328,7 @@ func StorageHomeWithConfig(cfg *config.Config) []cli.Flag {
 		&cli.StringFlag{
 			Name:        "storage-owncloud-layout",
 			Value:       "{{.Username}}",
-			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{.UsernamePrefixCount.2}}/{{.UsernameLower}}" will turn "Einstein" into "Ei/Einstein" `,
+			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{substr 0 1 .Username}}/{{.Username}}" will turn "einstein" into "e/einstein"`,
 			EnvVars:     []string{"REVA_STORAGE_OWNCLOUD_LAYOUT"},
 			Destination: &cfg.Reva.Storages.OwnCloud.Layout,
 		},
