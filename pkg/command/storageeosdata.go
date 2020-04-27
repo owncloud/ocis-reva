@@ -19,8 +19,8 @@ import (
 // StorageEOSData is the entrypoint for the storage-oc-data command.
 func StorageEOSData(cfg *config.Config) *cli.Command {
 	return &cli.Command{
-		Name:  "storage-oc-data",
-		Usage: "Start reva storage-oc-data service",
+		Name:  "storage-eos-data",
+		Usage: "Start reva storage-eos-data service",
 		Flags: flagset.StorageEOSDataWithConfig(cfg),
 		Before: func(c *cli.Context) error {
 			cfg.Reva.StorageEOSData.Services = c.StringSlice("service")
