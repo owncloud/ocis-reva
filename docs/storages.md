@@ -32,6 +32,8 @@ Unfortunately, no POSIX filesystem natively supports all storage aspects that ow
 - trash or undelete (trash can be done by wrapping rm)
 - versions (only snapshots, which is a different concept)
 
+A more extensive description of the storage aspects can be found in the [upstream documentation](https://reva.link/docs/concepts/storages/#aspects-of-storage-drivers)
+
 ## Storage drivers
 
 Reva currently has four storage driver implementations that can be used for *storage providers* an well as *data providers*.
