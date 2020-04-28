@@ -86,6 +86,7 @@ type PublicStorage struct {
 	PublicShareProviderAddr string
 	StorageProviderAddr     string
 	UserProviderAddr        string
+	MountID                 string
 }
 
 // StorageConfig combines all available storage driver configuration parts.

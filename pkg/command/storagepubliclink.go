@@ -82,15 +82,15 @@ func StoragePublicLink(cfg *config.Config) *cli.Command {
 						},
 						"services": map[string]interface{}{
 							"publicstorageprovider": map[string]interface{}{
-								"mount_path":   "/public/", // localhost:[ocdavport]/remote.php/dav/public-files/{token}/folderA/folderB/files.txt
-								"mount_id":     "e1a73ede-549b-4226-abdf-40e69ca8230d",
-								"gateway_addr": "localhost:9142",
+								"mount_path":   cfg.Reva.StoragePublicLink.MountPath,
+								"mount_id":     cfg.Reva.StoragePublicLink.MountID,
+								"gateway_addr": cfg.Reva.Gateway.URL,
 							},
 							"authprovider": map[string]interface{}{
 								"auth_manager": "publicshares",
 								"auth_managers": map[string]interface{}{
 									"publicshares": map[string]interface{}{
-										"gateway_addr": "localhost:9142",
+										"gateway_addr": cfg.Reva.Gateway.URL,
 									},
 								},
 							},
