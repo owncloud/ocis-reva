@@ -287,6 +287,7 @@ github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ
 github.com/hashicorp/golang-lru v0.5.3/go.mod h1:iADmTwqILo4mZ8BN3D2Q6+9jd8WM5uGBxy+E8yxSoD4=
 github.com/hashicorp/hcl v1.0.0 h1:0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4=
 github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T20WEQ=
+github.com/haya14busa/goverage v0.0.0-20180129164344-eec3514a20b5 h1:FdBGmSkD2QpQzRWup//SGObvWf2nq89zj9+ta9OvI3A=
 github.com/haya14busa/goverage v0.0.0-20180129164344-eec3514a20b5/go.mod h1:0YZ2wQSuwviXXXGUiK6zXzskyBLAbLXhamxzcFHSLoM=
 github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
@@ -463,6 +464,8 @@ github.com/owncloud/flaex v0.0.0-20200411150708-dce59891a203 h1:sXVTQ94GWeiBhlgN
 github.com/owncloud/flaex v0.0.0-20200411150708-dce59891a203/go.mod h1:jip86t4OVURJTf8CM/0e2qcji/Y4NG3l2lR8kex4JWw=
 github.com/owncloud/ocis-pkg/v2 v2.0.1 h1:3ISEtfjAz4pDFczTggIJwKuft3bVsAp1C7dFY9BBPEs=
 github.com/owncloud/ocis-pkg/v2 v2.0.1/go.mod h1:7bVnn3VUaqdmvpMkXF0QVEF1fRugs35hSkuVTAq9yjk=
+github.com/owncloud/ocis-pkg/v2 v2.2.1 h1:LK7WxHYugEFQ9NHTOz0EP8DRjbt51wXhyqruV03z6zI=
+github.com/owncloud/ocis-pkg/v2 v2.2.1/go.mod h1:MXv7QzsYsu4YWuyJxhq1kLLmJa/r5gbqHe1FXulMHaw=
 github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c h1:rp5dCmg/yLR3mgFuSOe4oEnDDmGLROTvMragMUXpTQw=
 github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c/go.mod h1:X07ZCGwUbLaax7L0S3Tw4hpejzu63ZrrQiUe6W0hcy0=
 github.com/parnurzeal/gorequest v0.2.15/go.mod h1:3Kh2QUMJoqw3icWAecsyzkpY7UzRfDhbRdTjtNwNiUE=
@@ -899,6 +902,7 @@ honnef.co/go/tools v0.0.0-20190106161140-3f1c8253044a/go.mod h1:rf3lG4BRIbNafJWh
 honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
 honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt0JzvZhAg=
+honnef.co/go/tools v0.0.1-2020.1.3 h1:sXmLre5bzIR6ypkjXCDI3jHPssRhc8KD/Ome589sc3U=
 honnef.co/go/tools v0.0.1-2020.1.3/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 k8s.io/kubernetes v1.13.0/go.mod h1:ocZa8+6APFNC2tX1DZASIbocyYT5jHzqFVsY5aoB7Jk=
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
