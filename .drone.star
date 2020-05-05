@@ -170,7 +170,7 @@ def testing(ctx):
         'pull': 'always',
         'environment' : {
           'TEST_SERVER_URL': 'http://reva-server:9140',
-          'BEHAT_FILTER_TAGS': '~@skipOnOcis&&~@skipOnLDAP&&@TestAlsoOnExternalUserBackend&&~@local_storage',
+          'BEHAT_FILTER_TAGS': '~@skipOnOcis&&~@skipOnLDAP&&@TestAlsoOnExternalUserBackend&&~@local_storage&&@issue-ocis-reva-67',
           'REVA_LDAP_HOSTNAME':'ldap',
           'TEST_EXTERNAL_USER_BACKENDS':'true',
           'TEST_OCIS':'true',
