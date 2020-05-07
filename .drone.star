@@ -189,6 +189,31 @@ def testing(ctx):
           ]
       },
       {
+        'name': 'check-capabilities',
+        'image': 'owncloudci/php:7.2',
+        'pull': 'always',
+        'environment' : {
+          'TEST_SERVER_URL': 'http://reva-server:9140',
+          'BEHAT_FILTER_TAGS': '~@skipOnOcis&&~@skipOnLDAP&&@TestAlsoOnExternalUserBackend&&~@local_storage',
+          'REVA_LDAP_HOSTNAME':'ldap',
+          'TEST_EXTERNAL_USER_BACKENDS':'true',
+          'TEST_OCIS':'true',
+          'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
+          'BEHAT_FEATURE': 'tests/acceptance/features/apiCapabilities/capabilitiesWithNormalUser.feature'
+         },
+         'commands': [
+           'git clone -b normal-user-capabilities --depth=1 https://github.com/owncloud/core.git /srv/app/capabilities-test-runner',
+           'cd /srv/app/capabilities-test-runner',
+           'make test-acceptance-api'
+          ],
+          'volumes': [
+            {
+              'name': 'gopath',
+              'path': '/srv/app',
+            },
+          ]
+      },
+      {
         'name': 'import-litmus-users',
         'image': 'emeraldsquad/ldapsearch',
         'pull': 'always',
