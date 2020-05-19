@@ -91,7 +91,7 @@ func StoragePublicLink(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "addr",
-			Value:       "0.0.0.0:10054",
+			Value:       "localhost:10054",
 			Usage:       "Address to bind reva service",
 			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_ADDR"},
 			Destination: &cfg.Reva.StoragePublicLink.Addr,
