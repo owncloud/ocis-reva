@@ -383,6 +383,7 @@ def uiTests(ctx):
         'image': 'webhippie/golang:1.13',
         'pull': 'always',
         'commands': [
+          'pwd',
           'make build',
         ],
         'volumes': [
@@ -410,30 +411,44 @@ def uiTests(ctx):
         ]
       },
       {
-        'name': 'konnectd',
-        'image': 'owncloud/ocis-konnectd',
+        'name': 'build-phoenix',
+        'image': 'webhippie/golang:1.13',
         'pull': 'always',
-        'detach': True,
-        'environment': {
-          'LDAP_BASEDN': 'ou=TestUsers,dc=owncloud,dc=com',
-          'LDAP_BINDDN': 'cn=admin,dc=owncloud,dc=com',
-          'LDAP_URI': 'ldap://ldap:389',
-          'KONNECTD_IDENTIFIER_REGISTRATION_CONF': '/srv/config/drone/identifier-registration.yml',
-          'KONNECTD_ISS': 'https://konnectd:9130',
-          'KONNECTD_TLS': 'true',
-          'LDAP_BINDPW': 'admin',
-          'LDAP_SCOPE': 'sub',
-          'LDAP_LOGIN_ATTRIBUTE': 'uid',
-          'LDAP_EMAIL_ATTRIBUTE': 'mail',
-          'LDAP_NAME_ATTRIBUTE': 'givenName',
-          'LDAP_UUID_ATTRIBUTE': 'uid',
-          'LDAP_UUID_ATTRIBUTE_TYPE': 'text',
-          'LDAP_FILTER': "(objectClass=posixaccount)"
-        },
+        'commands': [
+          'git clone http://github.com/owncloud/ocis-phoenix.git',
+          'cd ocis-phoenix',
+          'make build',
+          'cp bin/ocis-phoenix /srv/app'
+        ],
         'volumes': [
           {
             'name': 'config',
             'path': '/srv/config',
+          },
+          {
+            'name': 'gopath',
+            'path': '/srv/app',
+          },
+        ]
+      },
+      {
+        'name': 'build-konnectd',
+        'image': 'webhippie/golang:1.13',
+        'pull': 'always',
+        'commands': [
+          'git clone http://github.com/owncloud/ocis-konnectd.git',
+          'cd ocis-konnectd',
+          'make build',
+          'cp bin/ocis-konnectd /srv/app'
+        ],
+        'volumes': [
+          {
+            'name': 'config',
+            'path': '/srv/config',
+          },
+          {
+            'name': 'gopath',
+            'path': '/srv/app',
           },
         ]
       },
@@ -460,7 +475,7 @@ def uiTests(ctx):
       },
       {
         'name': 'phoenix',
-        'image': 'owncloud/ocis-phoenix',
+        'image': 'webhippie/golang:1.13',
         'pull': 'always',
         'detach': True,
         'environment': {
@@ -468,6 +483,9 @@ def uiTests(ctx):
           'PHOENIX_OIDC_CLIENT_ID': 'phoenix',
           'PHOENIX_ASSET_PATH': '/srv/app/uitestrunner/dist'
         },
+        'commands': [
+          '/srv/app/ocis-phoenix server'
+        ],
         'volumes': [
           {
             'name': 'config',
@@ -475,6 +493,41 @@ def uiTests(ctx):
           },
           {
             'name': 'gopath',
+            'path': '/srv/app',
+          },
+        ]
+      },
+      {
+        'name': 'konnectd',
+        'image': 'webhippie/golang:1.13',
+        'pull': 'always',
+        'detach': True,
+        'environment': {
+          'LDAP_BASEDN': 'ou=TestUsers,dc=owncloud,dc=com',
+          'LDAP_BINDDN': 'cn=admin,dc=owncloud,dc=com',
+          'LDAP_URI': 'ldap://ldap:389',
+          'KONNECTD_IDENTIFIER_REGISTRATION_CONF': '/srv/config/drone/identifier-registration.yml',
+          'KONNECTD_ISS': 'https://konnectd:9130',
+          'KONNECTD_TLS': 'true',
+          'LDAP_BINDPW': 'admin',
+          'LDAP_SCOPE': 'sub',
+          'LDAP_LOGIN_ATTRIBUTE': 'uid',
+          'LDAP_EMAIL_ATTRIBUTE': 'mail',
+          'LDAP_NAME_ATTRIBUTE': 'givenName',
+          'LDAP_UUID_ATTRIBUTE': 'uid',
+          'LDAP_UUID_ATTRIBUTE_TYPE': 'text',
+          'LDAP_FILTER': "(objectClass=posixaccount)"
+        },
+        'commands': [
+          '/srv/app/ocis-konnectd server'
+        ],
+        'volumes': [
+          {
+            'name': 'config',
+            'path': '/srv/config',
+          },
+          {
+            'name': 'config',
             'path': '/srv/app',
           },
         ]
