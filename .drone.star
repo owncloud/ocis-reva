@@ -69,6 +69,8 @@ def apiTests(ctx):
           'REVA_SHARING_USER_JSON_FILE': '/srv/app/tmp/reva/shares.json'
         },
         'commands': [
+          'apk add mailcap',
+          'cat /etc/mime.types',
           'mkdir -p /srv/app/tmp/reva',
           'bin/ocis-reva gateway &',
           'bin/ocis-reva users &',
