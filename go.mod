@@ -11,6 +11,7 @@ require (
 	github.com/micro/cli/v2 v2.1.1
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-micro/v2 v2.0.0
+	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/oklog/run v1.0.0
 	github.com/owncloud/flaex v0.0.0-20200411150708-dce59891a203
 	github.com/owncloud/ocis-pkg/v2 v2.2.1
@@ -20,7 +21,6 @@ require (
 	github.com/restic/calens v0.2.0
 	github.com/spf13/viper v1.6.1
 	github.com/uber/jaeger-client-go v2.20.1+incompatible // indirect
-	golang.org/x/sys v0.0.0-20200103143344-a1369afcdac7 // indirect
 	gopkg.in/ini.v1 v1.51.1 // indirect
 )
 
