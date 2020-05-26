@@ -109,6 +109,7 @@ func Gateway(cfg *config.Config) *cli.Command {
 								"datagateway":                    cfg.Reva.Frontend.URL,
 								"transfer_shared_secret":         cfg.Reva.TransferSecret,
 								"transfer_expires":               cfg.Reva.TransferExpires,
+								"link_grants_file":               "/var/tmp/reva/link_grants.json",
 							},
 							"authregistry": map[string]interface{}{
 								"driver": "static",
