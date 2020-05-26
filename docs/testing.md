@@ -8,9 +8,9 @@ geekdocFilePath: testing.md
 ---
 
 
-## Acceptance tests
+## API Acceptance tests
 
-We are using the ownCloud 10 acceptance testsuite against ocis. To set this up you need the owncloud 10 core repo, a ldap server that the acceptance tests can use to manage users, a redis server for file-versions and the ocis-reva code.
+We are using the ownCloud 10 API acceptance testsuite against ocis. To set this up you need the owncloud 10 core repo, a ldap server that the acceptance tests can use to manage users, a redis server for file-versions and the ocis-reva code.
 
 ### Getting the tests
 
@@ -72,7 +72,7 @@ bin/ocis-reva storage-oc-data & \
 bin/ocis-reva users &
 ```
 
-### Run the acceptance tests
+### Run the API acceptance tests
 
 In the ownCloud 10 core repo run
 
@@ -89,7 +89,7 @@ Make sure to adjust the settings `TEST_SERVER_URL` and `OCIS_REVA_DATA_ROOT` acc
 
 This will run all tests that can work with LDAP and are not skipped on OCIS
 
-To run a single test add `BEHAT_FEATURE=<feature file>`
+To run a single test add `BEHAT_FEATURE=<feature file>` and specify the path to the feature file and an optional line number. For example: `BEHAT_FEATURE='tests/acceptance/features/apiWebdavUpload1/uploadFile.feature:12'`
 
 ### use existing tests for BDD
 
@@ -146,5 +146,5 @@ If you want to work on a specific issue
     If the changes also affect the `ocis` repository make sure the changes get ported over there immediately, otherwise the tests will start failing there.
 
 ### Notes
-- in a normal case the test-code cleans up users after the test-run, but if a test-run is interrupted (e.g. by CTRL+C) users might have been left on the LDAP server. In that case rerunning the tests requires wiping the users in the ldap server, otherwise the tests will fail when trying to populate the users.
+- in a normal case the test-code cleans up users after the test-run, but if a test-run is interrupted (e.g. by CTRL+C) users might have been left on the LDAP server. In that case rerunning the tests requires wiping the users in the ldap server, otherwise the tests will fail when trying to populate the users. This can be done by simply running `docker stop docker-slapd && docker rm docker-slapd` and [restarting the LDAP server container](#run-a-ldap-server-in-a-docker-container)
 - the tests usually create users in the OU `TestUsers` with usernames specified in the feature file. If not defined in the feature file, most users have the password `123456`, defined by `regularUserPassword` in `behat.yml`, but other passwords are also used, see [`\FeatureContext::getPasswordForUser()`](https://github.com/owncloud/core/blob/master/tests/acceptance/features/bootstrap/FeatureContext.php#L386) for mapping and [`\FeatureContext::__construct`](https://github.com/owncloud/core/blob/master/tests/acceptance/features/bootstrap/FeatureContext.php#L1668) for the password definitions.
