@@ -1,4 +1,4 @@
-# ownCloud Infinite Scale: Reva
+ # ownCloud Infinite Scale: Reva
 
 [![Build Status](https://cloud.drone.io/api/badges/owncloud/ocis-reva/status.svg)](https://cloud.drone.io/owncloud/ocis-reva)
 [![Gitter chat](https://badges.gitter.im/cs3org/reva.svg)](https://gitter.im/cs3org/reva)
