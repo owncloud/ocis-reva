@@ -21,6 +21,7 @@ type Gateway struct {
 	CommitShareToStorageGrant  bool
 	CommitShareToStorageRef    bool
 	ShareFolder                string
+	LinkGrants                 string
 	DisableHomeCreationOnLogin bool
 	// include the home folder config for the storage registry
 	// HomeProvider is the path in the global namespace that the static storage registry uses to determine the home storage

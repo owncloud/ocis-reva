@@ -44,7 +44,7 @@ func StoragePublicLink(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "debug-addr",
-			Value:       "0.0.0.0:9155",
+			Value:       "0.0.0.0:10053",
 			Usage:       "Address to bind debug server",
 			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DEBUG_ADDR"},
 			Destination: &cfg.Reva.StoragePublicLink.DebugAddr,
@@ -95,13 +95,6 @@ func StoragePublicLink(cfg *config.Config) []cli.Flag {
 			Usage:       "Address to bind reva service",
 			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_ADDR"},
 			Destination: &cfg.Reva.StoragePublicLink.Addr,
-		},
-		&cli.StringFlag{
-			Name:        "url",
-			Value:       "localhost:10054",
-			Usage:       "URL to use for the reva service",
-			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_URL"},
-			Destination: &cfg.Reva.StoragePublicLink.URL,
 		},
 		&cli.StringSliceFlag{
 			Name:    "service",

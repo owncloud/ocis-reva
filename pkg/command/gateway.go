@@ -104,12 +104,13 @@ func Gateway(cfg *config.Config) *cli.Command {
 								"commit_share_to_storage_grant": cfg.Reva.Gateway.CommitShareToStorageGrant,
 								"commit_share_to_storage_ref":   cfg.Reva.Gateway.CommitShareToStorageRef,
 								"share_folder":                  cfg.Reva.Gateway.ShareFolder, // ShareFolder is the location where to create shares in the recipient's storage provider.
+								// public links
+								"link_grants_file": cfg.Reva.Gateway.LinkGrants,
 								// other
 								"disable_home_creation_on_login": cfg.Reva.Gateway.DisableHomeCreationOnLogin,
 								"datagateway":                    cfg.Reva.Frontend.URL,
 								"transfer_shared_secret":         cfg.Reva.TransferSecret,
 								"transfer_expires":               cfg.Reva.TransferExpires,
-								"link_grants_file":               "/var/tmp/reva/link_grants.json",
 							},
 							"authregistry": map[string]interface{}{
 								"driver": "static",
@@ -118,7 +119,7 @@ func Gateway(cfg *config.Config) *cli.Command {
 										"rules": map[string]interface{}{
 											"basic":        cfg.Reva.AuthBasic.URL,
 											"bearer":       cfg.Reva.AuthBearer.URL,
-											"publicshares": "localhost:10054",
+											"publicshares": cfg.Reva.StoragePublicLink.URL,
 										},
 									},
 								},
