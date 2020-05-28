@@ -3,8 +3,8 @@ module github.com/owncloud/ocis-reva
 go 1.13
 
 require (
-	github.com/cs3org/reva v0.1.1-0.20200320145721-40c4334849c3
-	github.com/gofrs/uuid v3.2.0+incompatible
+	github.com/cs3org/reva v0.1.1-0.20200528123359-7d74bf8e9928
+	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/micro/cli/v2 v2.1.1
 	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-micro/v2 v2.0.0
