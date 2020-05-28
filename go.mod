@@ -16,5 +16,3 @@ require (
 	github.com/uber/jaeger-client-go v2.20.1+incompatible // indirect
 	gopkg.in/ini.v1 v1.51.1 // indirect
 )
-
-replace github.com/cs3org/reva => ../../refs/reva
