@@ -104,8 +104,6 @@ func Gateway(cfg *config.Config) *cli.Command {
 								"commit_share_to_storage_grant": cfg.Reva.Gateway.CommitShareToStorageGrant,
 								"commit_share_to_storage_ref":   cfg.Reva.Gateway.CommitShareToStorageRef,
 								"share_folder":                  cfg.Reva.Gateway.ShareFolder, // ShareFolder is the location where to create shares in the recipient's storage provider.
-								// public links
-								"link_grants_file": cfg.Reva.Gateway.LinkGrants,
 								// other
 								"disable_home_creation_on_login": cfg.Reva.Gateway.DisableHomeCreationOnLogin,
 								"datagateway":                    cfg.Reva.Frontend.URL,
