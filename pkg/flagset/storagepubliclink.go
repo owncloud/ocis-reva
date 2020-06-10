@@ -147,10 +147,17 @@ func StoragePublicLink(cfg *config.Config) []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:        "data-server-url",
-			Value:       "http://localhost:9156/data",
+			Value:       "http://localhost:9199",
 			Usage:       "data server url",
 			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_SERVER_URL"},
 			Destination: &cfg.Reva.StoragePublicLink.DataServerURL,
+		},
+		&cli.StringFlag{
+			Name:        "data-server-prefix",
+			Value:       "data",
+			Usage:       "data server url prefix",
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_SERVER_PREFIX"},
+			Destination: &cfg.Reva.StoragePublicLink.DataServerPrefix,
 		},
 		&cli.BoolFlag{
 			Name:        "enable-home-creation",
