@@ -82,10 +82,12 @@ func StoragePublicLink(cfg *config.Config) *cli.Command {
 						},
 						"services": map[string]interface{}{
 							"publicstorageprovider": map[string]interface{}{
-								"mount_path":   cfg.Reva.StoragePublicLink.MountPath,
-								"mount_id":     cfg.Reva.StoragePublicLink.MountID,
-								"driver_addr":  cfg.Reva.StoragePublicLink.PublicShareProviderAddr,
-								"gateway_addr": cfg.Reva.Gateway.URL,
+								"mount_path":         cfg.Reva.StoragePublicLink.MountPath,
+								"mount_id":           cfg.Reva.StoragePublicLink.MountID,
+								"driver_addr":        cfg.Reva.StoragePublicLink.PublicShareProviderAddr,
+								"gateway_addr":       cfg.Reva.Gateway.URL,
+								"data_server_url":    cfg.Reva.StoragePublicLink.DataServerURL,
+								"data_server_prefix": cfg.Reva.StoragePublicLink.DataServerPrefix,
 							},
 							"authprovider": map[string]interface{}{
 								"auth_manager": "publicshares",
