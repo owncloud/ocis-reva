@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '158bd976047ea8abd137e2c61905d9dd63dc977d'),
+    apiTests(ctx, 'get-rid-of-unnecessary-skeleton', '158bd976047ea8abd137e2c61905d9dd63dc977d'),
   ]
 
   stages = [
