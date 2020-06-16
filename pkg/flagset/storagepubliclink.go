@@ -180,5 +180,43 @@ func StoragePublicLink(cfg *config.Config) []cli.Flag {
 			EnvVars:     []string{"REVA_GATEWAY_URL"},
 			Destination: &cfg.Reva.Gateway.URL,
 		},
+
+		// owncloud
+
+		&cli.StringFlag{
+			Name:        "storage-owncloud-datadir",
+			Value:       "/var/tmp/reva/data",
+			Usage:       "the path to the owncloud data directory",
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATADIR"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Datadirectory,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-scan",
+			Value:       true,
+			Usage:       "scan files on startup to add fileids",
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_SCAN"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Scan,
+		},
+		&cli.StringFlag{
+			Name:        "storage-owncloud-redis",
+			Value:       ":6379",
+			Usage:       "the address of the redis server",
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_REDIS_ADDR"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Redis,
+		},
+		&cli.BoolFlag{
+			Name:        "storage-owncloud-enable-home",
+			Value:       true,
+			Usage:       "enable the creation of home storages",
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_ENABLE_HOME"},
+			Destination: &cfg.Reva.Storages.OwnCloud.EnableHome,
+		},
+		&cli.StringFlag{
+			Name:        "storage-owncloud-layout",
+			Value:       "{{.Username}}",
+			Usage:       `"layout of the users home dir path on disk, in addition to {{.Username}}, {{.UsernameLower}} and {{.Provider}} also supports prefixing dirs: "{{.UsernamePrefixCount.2}}/{{.UsernameLower}}" will turn "Einstein" into "Ei/Einstein" `,
+			EnvVars:     []string{"REVA_STORAGE_PUBLIC_LINK_DATA_LAYOUT"},
+			Destination: &cfg.Reva.Storages.OwnCloud.Layout,
+		},
 	}
 }
