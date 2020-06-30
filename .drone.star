@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'enable-tests-ocis-reva-278', '24406db4f742b174fcd40740e6938a463eb5ebd2'),
+    apiTests(ctx, 'enable-tests-ocis-reva-278', '32ebdf82bf907f640fe6e1c86c59a236b8ec5bd0'),
   ]
 
   stages = [
