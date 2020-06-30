@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '0dc76b2452ef0c4388af765a738679097bd1491d'),
+    apiTests(ctx, 'public-link-mtime', ''),
   ]
 
   stages = [
