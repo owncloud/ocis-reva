@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '5d1cf1895083f143c4600a613bfbad5c1810846b'),
+    apiTests(ctx, 'overwrite-file-with-mtime', ''),
   ]
 
   stages = [
