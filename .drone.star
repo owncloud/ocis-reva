@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', 'eafeb8f4189b017aa151e0be642c1725e5ccac62'),
+    apiTests(ctx, 'filesWithCommas', ''),
   ]
 
   stages = [
