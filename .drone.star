@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'expected-failures-in-acceptance-tests', 'fb5ac317dfd95b910fcb66c8c6513b49c1d91a15'),
+    apiTests(ctx, 'expected-failures-in-acceptance-tests', ''),
   ]
 
   stages = [
@@ -102,7 +102,8 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
           'TEST_EXTERNAL_USER_BACKENDS':'true',
           'TEST_OCIS':'true',
           'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
-          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton'
+          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton',
+          'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures.txt'
         },
         'commands': [
           'git clone -b master --depth=1 https://github.com/owncloud/testing.git /srv/app/tmp/testing',
