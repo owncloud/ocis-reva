@@ -86,7 +86,7 @@ The *minimal* storage driver for a POSIX based filesystem. It literally supports
 
 - tree provided by a POSIX filesystem
   - inefficiend path by id lookup, currently uses the file path as id, so ids are not stable
-    - can store a uuid in extended attributes and use a cache to look them up
+    - can store a uuid in extended attributes and use a cache to look them up, similar to the owncloud driver
   - no native ETag propagation, five options are available:
     - built in propagation (changes bybassing ocis are not picked up until a rescan)
     - built in inotify (requires 48 bytes of RAM per file, needs to kheep track of every file and folder)
@@ -113,13 +113,42 @@ The *minimal* storage driver for a POSIX based filesystem. It literally supports
   - design new freedesktop spec, basically what is done in oc10 without the limitations or borrow ideas from the freedesktop trash spec
   - fuse filesystem overlay
 
-To provide the other storage aspects we plan to implement a FUSE overlay filesystem which will add the different aspects on top of local filesystems like ext4, btrfs or xfs. It should work on NFSv45 as well, although NFSv4 supports RichACLs and we will explore how to leverage them to implement sharing at a future date.
+To provide the other storage aspects we plan to implement a FUSE overlay filesystem which will add the different aspects on top of local filesystems like ext4, btrfs or xfs. It should work on NFSv45 as well, although NFSv4 supports RichACLs and we will explore how to leverage them to implement sharing at a future date. The idea is to use the storages native capabilities to deliver the best user experience. But again: that means making the right tradeoffs.
 
 ### OwnCloud Storage Driver
 
-This is the current default storage driver. While it implements the file tree (using redis, including id based lookup), etag propagation, trash, versions and sharing (including expiry) using the data directory layout of ownCloud 10 it has [known limitations](https://github.com/owncloud/core/issues/28095) that cannot be fixed without changing the actual layout on disk. It persist grants using extandad attributes and as a result does not need OS integration for grant persistence.
+This is the current default storage driver. While it implements the file tree (using redis, including id based lookup), etag propagation, trash, versions and sharing (including expiry) using the data directory layout of ownCloud 10 it has [known limitations](https://github.com/owncloud/core/issues/28095) that cannot be fixed without changing the actual layout on disk.
 
-We plan to deprecate it in favor of the local storage driver in combination with a FUSE based overlay filesystem when the migration path has been fully tested.
+- tree provided by a POSIX filesystem
+  - file layout is mapped to the old owncloud 10 layout
+    - the root of tree for a user on disk is prefixed with `/path/to/data/<username>/files/`
+  - efficiend path by id lookup
+    - all files and folders get assigned a uuid in the extended attributes
+    - when starting the storage provider it will walk all files to populate a redis kv store for uuid to path lookup
+    - slow to boot trees with lots of nodes
+  - build in ETag propagation
+    - etags are calculated based on mtime
+    - mtime is propagated by the storage driver
+    - changes bypassing ocis are not picked up until a restart of the storage provider
+  - no subtree accounting, same options as for local storage
+  - efficient rename
+    - TODO update the kv store for path lookup, this is an O(n) operation
+  - arbitrary metadata using extended attributes
+- grant persistence
+  - using custom ACLs that are stored as extended attributes
+    - a grant corresponds to one extended attribute of 40-100 bytes, effectively limiting the number of shares to ~100-40
+    - extended attributes have varying limitations, based on the underlying filesystem
+      - the linux kernel impeses a limit of 255bytes per name and 64KiB per value
+      - ext2/3/4: total bytes for all attributes of a file is limited to 4KiB (a filesystem block)
+      - xfs: limit of 64KiB per value
+      - btrfs: total bytes used for the name, value, and implementation overhead bytes 16KiB (the default filesystem nodesize value)
+  -  does not require OS level integration
+- built in trash
+  - trashed files are moved to `/path/to/data/<username>/files_trashbin/`
+  - trashed files are appended a timestamp `.d<unixtime>`, which [breaks trashing of files that reach the filesystems specific name limit](https://github.com/owncloud/core/issues/28095)
+- built in versions
+  - file versions are stored in `/path/to/data/<username>/files_versions/`
+  - file versions are appended a timestamp `.d<unixtime>`, which [breaks versioning of files that reach the filesystems specific name limit](https://github.com/owncloud/core/issues/28095)
 
 ### EOS Storage Driver
 
