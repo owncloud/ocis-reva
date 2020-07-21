@@ -1,5 +1,6 @@
 apiAuthOcs/ocsGETAuth.feature:50
 apiAuthOcs/ocsGETAuth.feature:210
+apiWebdavProperties1/copyFile.feature:22
 apiWebdavProperties1/copyFile.feature:115
 apiWebdavProperties1/copyFile.feature:116
 apiWebdavProperties1/copyFile.feature:127
