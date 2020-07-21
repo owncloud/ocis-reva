@@ -13,7 +13,7 @@ geekdocFilePath: storages.md
 
 ## Storage providers
 
-To manage the file tree ocis uses reva *storage providers* that are accessing the underlying storage using a *storage driver*. The driver can be used to change the implementation of a storage aspect to better reflect the actual underying storage capabilities. As an example a move operation on a POSIX filesystem ([theoretically](https://danluu.com/deconstruct-files/)) is an atomic operation. When trying to implement a file tree on top S3 there is no native move operation that can be used. A naive implementation might fall bak on a COPY and DELETE. Some S3 implementations provide a COPY operation that uses an existing key as the source, so the file at least does not need to be reuploaded. In the worst case scenario, the rename of a folder with hundreds of thousands of objects, a reupload for every file has to be made. Instead of hiding this complexity a better choice might be to disable renaming of files or at least folders on S3. There are however implemetations of filesystems on top of S3 that store the tree metadata in dedicated objects or use a completely different persistance mechanism like a distributed key value store to implement the file tree aspect of a storage.
+To manage the file tree ocis uses reva *storage providers* that are accessing the underlying storage using a *storage driver*. The driver can be used to change the implementation of a storage aspect to better reflect the actual underlying storage capabilities. As an example a move operation on a POSIX filesystem ([theoretically](https://danluu.com/deconstruct-files/)) is an atomic operation. When trying to implement a file tree on top S3 there is no native move operation that can be used. A naive implementation might fall bak on a COPY and DELETE. Some S3 implementations provide a COPY operation that uses an existing key as the source, so the file at least does not need to be reuploaded. In the worst case scenario, the rename of a folder with hundreds of thousands of objects, a reupload for every file has to be made. Instead of hiding this complexity a better choice might be to disable renaming of files or at least folders on S3. There are however implementations of filesystems on top of S3 that store the tree metadata in dedicated objects or use a completely different persistance mechanism like a distributed key value store to implement the file tree aspect of a storage.
 
 
 {{< hint info >}}
@@ -41,11 +41,11 @@ While traditionally nodes in the tree are reached by traversing the path the tre
 For the state based sync a client can discover changes by recursively descending the tree and comparing the ETag for every node. If the storage technology supports propagating ETag changes up the tree, only the root node of a tree needs to be checked to determine if a discovery needs to be started and which nodes need to be traversed. This allows using the storage technology itself to persist all metadata that is necessary for sync, without additional services or caches.
 
 #### Subtree size accounting
-The tree can keep track of how many bytes are stored in a folder. Similar to etag propagation a change in file size is propagated up the hierarchy.
+The tree can keep track of how many bytes are stored in a folder. Similar to ETag propagation a change in file size is propagated up the hierarchy.
 
 {{< hint info >}}
-**Etag and Size propagation**
-When propagating the etag (mtime) and size changes up the tree the question is where to stop. If all changes need to be propagated to the root of a storage then the root or busy folders will become a hotspot. There aro two things to keep in mind: 1. propagation only happens until the root of a single space (a user private drive or a single group drive), 2. no cross storage propagation. The latter was used in oc10 to let clients detect when a file in a received shared folder changed. This functionality is moving to the storage registry which caches the etag for every root so clients can discove if and which storage changed.
+**ETag and Size propagation**
+When propagating the ETag (mtime) and size changes up the tree the question is where to stop. If all changes need to be propagated to the root of a storage then the root or busy folders will become a hotspot. There are two things to keep in mind: 1. propagation only happens until the root of a single space (a user private drive or a single group drive), 2. no cross storage propagation. The latter was used in oc10 to let clients detect when a file in a received shared folder changed. This functionality is moving to the storage registry which caches the ETag for every root so clients can discover if and which storage changed.
 {{< /hint >}}
 
 #### Rename
@@ -70,7 +70,7 @@ A user can restore a previous version of a file.
 
 {{< hint info >}}
 **Snapshots are not versions**
-Modern POSIX filesystems support snapshotting of volumes. This is different from keeping track of versions to a file or folder, but might be another implmentation strategy for a storage driver allow users to restore content.
+Modern POSIX filesystems support snapshotting of volumes. This is different from keeping track of versions to a file or folder, but might be another implementation strategy for a storage driver allow users to restore content.
 {{< /hint >}}
 
 ### Activity History
@@ -85,22 +85,22 @@ Reva currently has four storage driver implementations that can be used for *sto
 The *minimal* storage driver for a POSIX based filesystem. It literally supports none of the storage aspect other than basic file tree management. Sharing can - to a degree - be implemented using POSIX ACLs.
 
 - tree provided by a POSIX filesystem
-  - inefficiend path by id lookup, currently uses the file path as id, so ids are not stable
-    - can store a uuid in extended attributes and use a cache to look them up, similar to the owncloud driver
+  - inefficient path by id lookup, currently uses the file path as id, so ids are not stable
+    - can store a uuid in extended attributes and use a cache to look them up, similar to the ownCloud driver
   - no native ETag propagation, five options are available:
-    - built in propagation (changes bybassing ocis are not picked up until a rescan)
-    - built in inotify (requires 48 bytes of RAM per file, needs to kheep track of every file and folder)
+    - built in propagation (changes bypassing ocis are not picked up until a rescan)
+    - built in inotify (requires 48 bytes of RAM per file, needs to keep track of every file and folder)
     - external inotify (same RAM requirement, but could be triggered by external tools, eg. a workflow engine)
     - kernel audit log (use the linux kernel audit to capture file events on the storage and offload them to a queue)
     - fuse filesystem overlay
-  - no subtree accounting, same options as for etag propagation
+  - no subtree accounting, same options as for ETag propagation
   - efficient rename
   - arbitrary metadata using extended attributes
 - grant persistence
   - using POSIX ACLs
     - requires an LDAP server to make guest accounts available in the OS
       - OCIS has glauth which contains all users
-      - an existing LDAP could be used if guests ar prvisioned in another way
+      - an existing LDAP could be used if guests ar provisioned in another way
   - using extended attributes to implement expiry or sharing that does not require OS level integration
   - fuse filesystem overlay
 - no native trash
@@ -108,8 +108,8 @@ The *minimal* storage driver for a POSIX based filesystem. It literally supports
   - fuse filesystem overlay
 - no native versions, multiple options possible
   - git for folders
-  - rcs for signle files
-  - rsnapshot for hourly / daily / weekl / monthly backups ... but this is not versioning as known from oc10
+  - rcs for single files
+  - rsnapshot for hourly / daily / weekly / monthly backups ... but this is not versioning as known from oc10
   - design new freedesktop spec, basically what is done in oc10 without the limitations or borrow ideas from the freedesktop trash spec
   - fuse filesystem overlay
 
@@ -117,17 +117,17 @@ To provide the other storage aspects we plan to implement a FUSE overlay filesys
 
 ### OwnCloud Storage Driver
 
-This is the current default storage driver. While it implements the file tree (using redis, including id based lookup), etag propagation, trash, versions and sharing (including expiry) using the data directory layout of ownCloud 10 it has [known limitations](https://github.com/owncloud/core/issues/28095) that cannot be fixed without changing the actual layout on disk.
+This is the current default storage driver. While it implements the file tree (using redis, including id based lookup), ETag propagation, trash, versions and sharing (including expiry) using the data directory layout of ownCloud 10 it has [known limitations](https://github.com/owncloud/core/issues/28095) that cannot be fixed without changing the actual layout on disk.
 
 - tree provided by a POSIX filesystem
-  - file layout is mapped to the old owncloud 10 layout
+  - file layout is mapped to the old ownCloud 10 layout
     - the root of tree for a user on disk is prefixed with `/path/to/data/<username>/files/`
-  - efficiend path by id lookup
+  - efficient path by id lookup
     - all files and folders get assigned a uuid in the extended attributes
     - when starting the storage provider it will walk all files to populate a redis kv store for uuid to path lookup
     - slow to boot trees with lots of nodes
   - build in ETag propagation
-    - etags are calculated based on mtime
+    - ETags are calculated based on mtime
     - mtime is propagated by the storage driver
     - changes bypassing ocis are not picked up until a restart of the storage provider
   - no subtree accounting, same options as for local storage
@@ -138,7 +138,7 @@ This is the current default storage driver. While it implements the file tree (u
   - using custom ACLs that are stored as extended attributes
     - a grant corresponds to one extended attribute of 40-100 bytes, effectively limiting the number of shares to ~100-40
     - extended attributes have varying limitations, based on the underlying filesystem
-      - the linux kernel impeses a limit of 255bytes per name and 64KiB per value
+      - the linux kernel imposes a limit of 255bytes per name and 64KiB per value
       - ext2/3/4: total bytes for all attributes of a file is limited to 4KiB (a filesystem block)
       - xfs: limit of 64KiB per value
       - btrfs: total bytes used for the name, value, and implementation overhead bytes 16KiB (the default filesystem nodesize value)
@@ -152,7 +152,7 @@ This is the current default storage driver. While it implements the file tree (u
 
 ### EOS Storage Driver
 
-The cern eos storage has evolved with ownCloud and natively supports id based lookup, etag propagation, subtree size accounting, sharing, trash and versions. To use it you need to change the default configuration of the `ocis-reva storage-home` command (or have a look at the Makefile ̀ eos-start` target):
+The CERN eos storage has evolved with ownCloud and natively supports id based lookup, ETag propagation, subtree size accounting, sharing, trash and versions. To use it you need to change the default configuration of the `ocis-reva storage-home` command (or have a look at the Makefile ̀ eos-start` target):
 
 ```
 export REVA_STORAGE_HOME_DRIVER=eos
@@ -170,11 +170,11 @@ Pull requests to add explicit `reva storage-(s3|custom|...)` commands with worki
 
 ### S3 Storage Driver
 
-A naive driver that treats the keys in an S3 cabaple storage as `/` delimited path names. While it does not support MOVE or etag propagation it can be used to read and write files. Better integration with native capabilities like versioning is possible but depends on the Use Case. Several storage solutions that provide an S3 interface also support some form of notifications that can be used to implement etag propagation.
+A naive driver that treats the keys in an S3 capable storage as `/` delimited path names. While it does not support MOVE or ETag propagation it can be used to read and write files. Better integration with native capabilities like versioning is possible but depends on the Use Case. Several storage solutions that provide an S3 interface also support some form of notifications that can be used to implement ETag propagation.
 
 ## Data Providers
 
-Clients using the CS3 API use an [InitiateFileDownload](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.InitiateFileDownloadRequest) and ]InitiateUpload](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.InitiateFileUploadRequest) request at the [reva gateway](https://cs3org.github.io/cs3apis/#cs3.gateway.v1beta1.GatewayAPI) to obtain a URL endpoint that can be used to eiter GET the file content or upload content using the resumable [tus.io](https://tus.io) protocol.
+Clients using the CS3 API use an [InitiateFileDownload](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.InitiateFileDownloadRequest) and ]InitiateUpload](https://cs3org.github.io/cs3apis/#cs3.storage.provider.v1beta1.InitiateFileUploadRequest) request at the [reva gateway](https://cs3org.github.io/cs3apis/#cs3.gateway.v1beta1.GatewayAPI) to obtain a URL endpoint that can be used to either GET the file content or upload content using the resumable [tus.io](https://tus.io) protocol.
 
 The *data provider* uses the same *storage driver* as the *storage provider* but can be scaled independently.
 
