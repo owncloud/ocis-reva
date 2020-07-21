@@ -132,7 +132,7 @@ This is the current default storage driver. While it implements the file tree (u
     - changes bypassing ocis are not picked up until a restart of the storage provider
   - no subtree accounting, same options as for local storage
   - efficient rename
-    - TODO update the kv store for path lookup, this is an O(n) operation
+    - TODO [update the kv store for path lookup](https://github.com/cs3org/reva/issues/985), this is an O(n) operation
   - arbitrary metadata using extended attributes
 - grant persistence
   - using custom ACLs that are stored as extended attributes
