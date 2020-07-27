@@ -92,17 +92,18 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
         ]
       },
       {
-        'name': 'acceptance-tests',
+        'name': 'core-acceptance-tests',
         'image': 'owncloudci/php:7.2',
         'pull': 'always',
         'environment' : {
           'TEST_SERVER_URL': 'http://reva-server:9140',
-          'BEHAT_FILTER_TAGS': '~@skipOnOcis&&~@skipOnOcis-OC-Storage',
+          'BEHAT_FILTER_TAGS': '~@skipOnOcis-OC-Storage',
           'REVA_LDAP_HOSTNAME':'ldap',
           'TEST_EXTERNAL_USER_BACKENDS':'true',
           'TEST_OCIS':'true',
           'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
-          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton'
+          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton',
+          'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures.txt'
         },
         'commands': [
           'git clone -b master --depth=1 https://github.com/owncloud/testing.git /srv/app/tmp/testing',
