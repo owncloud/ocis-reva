@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '24b305a38f259584b683256880eb9e42f99f19c5'),
+    apiTests(ctx, 'tag-tests-toImplementOnOCIS-or-not', ''),
   ]
 
   stages = [
