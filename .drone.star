@@ -1,8 +1,5 @@
 def main(ctx):
-  before = [
-    testing(ctx),
-    apiTests(ctx, 'tag-tests-toImplementOnOCIS-or-not', ''),
-  ]
+  before = testPipelines(ctx, 'tag-tests-toImplementOnOCIS-or-not', '')
 
   stages = [
     docker(ctx, 'amd64'),
@@ -23,11 +20,18 @@ def main(ctx):
 
   return before + stages + after
 
-def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
+def testPipelines(ctx, coreBranch = 'master', coreCommit = ''):
+  return [
+    testing(ctx),
+    apiTests(ctx, coreBranch, coreCommit, 1, 2),
+    apiTests(ctx, coreBranch, coreCommit, 2, 2),
+  ]
+
+def apiTests(ctx, coreBranch = 'master', coreCommit = '', part_number = 1, number_of_parts = 1):
   return {
     'kind': 'pipeline',
     'type': 'docker',
-    'name': 'API-Tests',
+    'name': 'API-Tests-%s' % (part_number),
     'platform': {
       'os': 'linux',
       'arch': 'amd64',
@@ -92,7 +96,7 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
         ]
       },
       {
-        'name': 'core-acceptance-tests',
+        'name': 'core-acceptance-tests-%s' % (part_number),
         'image': 'owncloudci/php:7.2',
         'pull': 'always',
         'environment' : {
@@ -103,6 +107,8 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
           'TEST_OCIS':'true',
           'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
           'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton',
+          'DIVIDE_INTO_NUM_PARTS': number_of_parts,
+          'RUN_PART':  part_number,
           'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures.txt'
         },
         'commands': [
