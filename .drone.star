@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '9db442250583d3b71e633cf77fbcf643ed67e994'),
+    apiTests(ctx, 'skipOnOcis-ocsAuth', ''),
   ]
 
   stages = [
