@@ -1,7 +1,7 @@
 def main(ctx):
   before = [
     testing(ctx),
-    apiTests(ctx, 'master', '378d38ab844e048bc88ca7cc365592017f0c7227'),
+    apiTests(ctx, 'refactor-listFolder-tests', ''),
   ]
 
   stages = [
