@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': 'd65b8b5eefa0a59c8e9487196807d50588db698c',
+    'coreBranch': 'enablePassingSharingTests',
+    'coreCommit': '',
     'numberOfParts': 2
   }
 }
