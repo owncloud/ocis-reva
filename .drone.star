@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': '5e6593b9ed1124b815039c9efb943ba23d9e457c',
+    'coreBranch': 'suite-faliure-fix',
+    'coreCommit': '',
     'numberOfParts': 2
   }
 }
