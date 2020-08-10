@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': '03c68e17ebab61da2ebb0a9f541a6cffac0908ac',
+    'coreBranch': 'test-uploadFile-etag',
+    'coreCommit': '',
     'numberOfParts': 2
   }
 }
