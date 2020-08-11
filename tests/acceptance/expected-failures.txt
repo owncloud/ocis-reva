@@ -902,3 +902,6 @@ apiWebdavUpload2/uploadFileUsingOldChunking.feature:98
 apiWebdavUpload2/uploadFileUsingOldChunking.feature:99
 apiWebdavUpload2/uploadFileUsingOldChunking.feature:100
 apiWebdavUpload2/uploadFileUsingOldChunking.feature:101
+
+# If passing test is in expected failure list, then CI should report the unexpected success
+apiSharePublicLink2/uploadToPublicLinkShare.feature:140
