@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': 'f0fd17a01c69c7c5b518d3209afe8f3e4feac1ef',
+    'coreBranch': 'remove-skipOnOcis-tag',
+    'coreCommit': '',
     'numberOfParts': 2
   }
 }
