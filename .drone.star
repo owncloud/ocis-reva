@@ -29,11 +29,6 @@ def main(ctx):
   return before + stages + after
 
 def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
-pipelines = [
-    testing(ctx),
-    apiTests(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'])
-  ]
-
   return {
     'kind': 'pipeline',
     'type': 'docker',
