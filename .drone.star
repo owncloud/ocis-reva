@@ -7,7 +7,7 @@ config = {
 }
 
 def main(ctx):
-  before = apiTests(ctx)
+  before = apiTests(ctx, 'master', 'a06b1bd5ba8e5244bfaf7fa04f441961e6fb0daa')
 
   stages = [
     docker(ctx, 'amd64'),
@@ -29,6 +29,11 @@ def main(ctx):
   return before + stages + after
 
 def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
+pipelines = [
+    testing(ctx),
+    apiTests(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'])
+  ]
+
   return {
     'kind': 'pipeline',
     'type': 'docker',
