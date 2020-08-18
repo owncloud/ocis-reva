@@ -7,7 +7,7 @@ config = {
 }
 
 def main(ctx):
-  before = testPipelines(ctx)
+  before = apiTests(ctx)
 
   stages = [
     docker(ctx, 'amd64'),
@@ -28,22 +28,11 @@ def main(ctx):
 
   return before + stages + after
 
-def testPipelines(ctx):
-  pipelines = [
-    testing(ctx),
-    localApiTestsOcStorage(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'])
-  ]
-
-  for runPart in range(1, config['apiTests']['numberOfParts'] + 1):
-    pipelines.append(coreApiTests(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'], runPart, config['apiTests']['numberOfParts']))
-
-  return pipelines
-
-def localApiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
+def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
   return {
     'kind': 'pipeline',
     'type': 'docker',
-    'name': 'localApiTestsOcStorage',
+    'name': 'API-tests',
     'platform': {
       'os': 'linux',
       'arch': 'amd64',
@@ -53,7 +42,7 @@ def localApiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
       revaServer() +
       cloneCoreRepos(coreBranch, coreCommit) + [
       {
-        'name': 'localApiTestsOcStorage',
+        'name': 'apiTests',
         'image': 'owncloudci/php:7.2',
         'pull': 'always',
         'environment' : {
@@ -67,65 +56,6 @@ def localApiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
           'PATH_TO_CORE': '/srv/app/testrunner'
         },
         'commands': [
-          'make test-acceptance-api'
-        ],
-        'volumes': [
-          {
-            'name': 'gopath',
-            'path': '/srv/app',
-          },
-        ]
-      },
-    ],
-    'services':
-      ldap() +
-      redis(),
-    'volumes': [
-      {
-        'name': 'gopath',
-        'temp': {},
-      },
-    ],
-    'trigger': {
-      'ref': [
-        'refs/heads/master',
-        'refs/tags/**',
-        'refs/pull/**',
-      ],
-    },
-  }
-
-def coreApiTests(ctx, coreBranch = 'master', coreCommit = '', part_number = 1, number_of_parts = 1):
-  return {
-    'kind': 'pipeline',
-    'type': 'docker',
-    'name': 'Core-API-Tests-%s' % (part_number),
-    'platform': {
-      'os': 'linux',
-      'arch': 'amd64',
-    },
-    'steps':
-      build() +
-      revaServer() +
-      cloneCoreRepos(coreBranch, coreCommit) + [
-      {
-        'name': 'oC10ApiTests-%s' % (part_number),
-        'image': 'owncloudci/php:7.2',
-        'pull': 'always',
-        'environment' : {
-          'TEST_SERVER_URL': 'http://reva-server:9140',
-          'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
-          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton',
-          'TEST_EXTERNAL_USER_BACKENDS':'true',
-          'REVA_LDAP_HOSTNAME':'ldap',
-          'TEST_OCIS':'true',
-          'BEHAT_FILTER_TAGS': '~@notToImplementOnOCIS&&~@toImplementOnOCIS&&~@preview-extension-required',
-          'DIVIDE_INTO_NUM_PARTS': number_of_parts,
-          'RUN_PART':  part_number,
-          'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures-on-OC-storage.txt'
-        },
-        'commands': [
-          'cd /srv/app/testrunner',
           'make test-acceptance-api'
         ],
         'volumes': [
