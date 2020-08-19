@@ -50,7 +50,7 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
       revaServer() +
       cloneCoreRepos(coreBranch, coreCommit) + [
       {
-        'name': 'apiTests',
+        'name': 'localApiTests',
         'image': 'owncloudci/php:7.2',
         'pull': 'always',
         'environment' : {
@@ -64,6 +64,32 @@ def apiTests(ctx, coreBranch = 'master', coreCommit = ''):
           'PATH_TO_CORE': '/srv/app/testrunner'
         },
         'commands': [
+          'make test-acceptance-api'
+        ],
+        'volumes': [
+          {
+            'name': 'gopath',
+            'path': '/srv/app',
+          },
+        ]
+      },
+    ] + [
+      {
+        'name': 'oC10ApiTests',
+        'image': 'owncloudci/php:7.2',
+        'pull': 'always',
+        'environment' : {
+          'TEST_SERVER_URL': 'http://reva-server:9140',
+          'OCIS_REVA_DATA_ROOT': '/srv/app/tmp/reva/',
+          'SKELETON_DIR': '/srv/app/tmp/testing/data/apiSkeleton',
+          'TEST_EXTERNAL_USER_BACKENDS':'true',
+          'REVA_LDAP_HOSTNAME':'ldap',
+          'TEST_OCIS':'true',
+          'BEHAT_FILTER_TAGS': '~@notToImplementOnOCIS&&~@toImplementOnOCIS&&~@preview-extension-required',
+          'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures-on-OC-storage.txt'
+        },
+        'commands': [
+          'cd /srv/app/testrunner',
           'make test-acceptance-api'
         ],
         'volumes': [
