@@ -1,4 +1,4 @@
-@api @files_sharing-app-required @public_link_share-feature-required @issue-ocis-reva-252
+@api @files_sharing-app-required @public_link_share-feature-required @issue-ocis-reva-252 @skipOnOcis-OC-Storage
 Feature: update a public link share
 
   Background:
