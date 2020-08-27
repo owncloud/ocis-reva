@@ -31,19 +31,16 @@ def main(ctx):
 def testPipelines(ctx):
   pipelines = [
     testing(ctx),
-    localApiTestsOcStorage(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'])
+    apiTestsOcStorage(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'])
   ]
-
-  for runPart in range(1, config['apiTests']['numberOfParts'] + 1):
-    pipelines.append(coreApiTests(ctx, config['apiTests']['coreBranch'], config['apiTests']['coreCommit'], runPart, config['apiTests']['numberOfParts']))
 
   return pipelines
 
-def localApiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
+def apiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
   return {
     'kind': 'pipeline',
     'type': 'docker',
-    'name': 'localApiTestsOcStorage',
+    'name': 'apiTestsOcStorage',
     'platform': {
       'os': 'linux',
       'arch': 'amd64',
@@ -76,40 +73,8 @@ def localApiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
           },
         ]
       },
-    ],
-    'services':
-      ldap() +
-      redis(),
-    'volumes': [
       {
-        'name': 'gopath',
-        'temp': {},
-      },
-    ],
-    'trigger': {
-      'ref': [
-        'refs/heads/master',
-        'refs/tags/**',
-        'refs/pull/**',
-      ],
-    },
-  }
-
-def coreApiTests(ctx, coreBranch = 'master', coreCommit = '', part_number = 1, number_of_parts = 1):
-  return {
-    'kind': 'pipeline',
-    'type': 'docker',
-    'name': 'Core-API-Tests-%s' % (part_number),
-    'platform': {
-      'os': 'linux',
-      'arch': 'amd64',
-    },
-    'steps':
-      build() +
-      revaServer() +
-      cloneCoreRepos(coreBranch, coreCommit) + [
-      {
-        'name': 'oC10ApiTests-%s' % (part_number),
+        'name': 'oC10ApiTests',
         'image': 'owncloudci/php:7.2',
         'pull': 'always',
         'environment' : {
@@ -120,8 +85,6 @@ def coreApiTests(ctx, coreBranch = 'master', coreCommit = '', part_number = 1, n
           'REVA_LDAP_HOSTNAME':'ldap',
           'TEST_OCIS':'true',
           'BEHAT_FILTER_TAGS': '~@notToImplementOnOCIS&&~@toImplementOnOCIS&&~@preview-extension-required&&~@local_storage',
-          'DIVIDE_INTO_NUM_PARTS': number_of_parts,
-          'RUN_PART':  part_number,
           'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures-on-OC-storage.txt'
         },
         'commands': [
