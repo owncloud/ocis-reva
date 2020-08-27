@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': 'd65b8b5eefa0a59c8e9487196807d50588db698c',
+    'coreBranch': 'tag-accessToShare',
+    'coreCommit': '',
     'numberOfParts': 2
   }
 }
@@ -84,7 +84,7 @@ def apiTestsOcStorage(ctx, coreBranch = 'master', coreCommit = ''):
           'TEST_EXTERNAL_USER_BACKENDS':'true',
           'REVA_LDAP_HOSTNAME':'ldap',
           'TEST_OCIS':'true',
-          'BEHAT_FILTER_TAGS': '~@notToImplementOnOCIS&&~@toImplementOnOCIS&&~@preview-extension-required&&~@local_storage',
+          'BEHAT_FILTER_TAGS': '@accessToShareSpecial',
           'EXPECTED_FAILURES_FILE': '/drone/src/tests/acceptance/expected-failures-on-OC-storage.txt'
         },
         'commands': [
