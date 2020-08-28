@@ -7,6 +7,7 @@ Feature: sharing
 
   @skipOnOcis-EOS-Storage @toFixOnOCIS @issue-ocis-reva-243
   # after fixing all issues delete this Scenario and use the one from oC10 core
+  # this is running before the accessToShareSpecial core scenarios
   Scenario: Share ownership change after moving a shared file to another share
     Given these users have been created with default attributes and without skeleton files:
       | username |
