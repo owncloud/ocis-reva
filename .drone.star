@@ -1,7 +1,7 @@
 config = {
   'apiTests': {
-    'coreBranch': 'master',
-    'coreCommit': '65ee49ae5dad3af84aa781b98e805fe463baf9fe',
+    'coreBranch': 'issue-ocis-reva-471',
+    'coreCommit': '',
     'numberOfParts': 4
   }
 }
