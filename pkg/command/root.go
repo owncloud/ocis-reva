@@ -84,6 +84,7 @@ func Execute() error {
 			StorageHome(cfg),
 			StorageHomeData(cfg),
 			StoragePublicLink(cfg),
+			StorageMetadata(cfg),
 			StorageOC(cfg),
 			StorageOCData(cfg),
 			StorageEOS(cfg),
