@@ -111,6 +111,7 @@ func Gateway(cfg *config.Config) *cli.Command {
 								"datagateway":                    urlWithScheme(cfg.Reva.DataGateway.URL),
 								"transfer_shared_secret":         cfg.Reva.TransferSecret,
 								"transfer_expires":               cfg.Reva.TransferExpires,
+								"home_mapping":                   cfg.Reva.Gateway.HomeMapping,
 							},
 							"authregistry": map[string]interface{}{
 								"driver": "static",

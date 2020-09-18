@@ -104,6 +104,13 @@ func GatewayWithConfig(cfg *config.Config) []cli.Flag {
 			EnvVars:     []string{"REVA_GATEWAY_DISABLE_HOME_CREATION_ON_LOGIN"},
 			Destination: &cfg.Reva.Gateway.DisableHomeCreationOnLogin,
 		},
+		&cli.StringFlag{
+			Name:        "storage-home-mapping",
+			Value:       "",
+			Usage:       "mapping template for user home paths to user-specific mount points",
+			EnvVars:     []string{"REVA_STORAGE_HOME_MAPPING"},
+			Destination: &cfg.Reva.Gateway.HomeMapping,
+		},
 
 		// other services
 
